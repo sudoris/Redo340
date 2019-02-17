@@ -1,0 +1,45 @@
+<% include partials/header %>
+
+<h1>Positions Page</h1>
+
+<h2>Add new position</h2>
+<fieldset>  
+  <form action="">    
+    <label for="title-input">Title:</label>
+    <input type="text" id='title-input' name="">
+    <br>    
+
+    <p>Managerial Duties</p>    
+    <label for="is-manager-input">Yes</label>
+    <input type="radio" id='is-manager-input' name="">    
+    <label for="not-manager-input">No</label>
+    <input type="radio" id="not-manager-input" name="">            
+    <br>
+
+    <input type="submit">
+  </form>  
+</fieldset>
+
+<h2>Positions</h2>
+<table>
+  <colgroup span="4"></colgroup>
+  <tr>
+    <th>Title</th>
+    <th>Has Managerial Duties</th>
+    
+  </tr>
+  <tr>
+    <td>Junior Software Engineer</td>
+    <td>No</td>     
+    <td><button>Update</button></td>
+    <td><button>Delete</button></td>  
+  </tr>
+  <tr>
+      <td>CTO</td>
+      <td>Yes</td>         
+      <td><button>Update</button></td>
+      <td><button>Delete</button></td>  
+    </tr>
+</table>
+
+<% include partials/footer %>
