@@ -1,182 +1,261 @@
+<div class="border-bottom">
+<div class="container; d-flex justify-content-left" style="background-color: #99d6ff;color:black; padding-top:10px; padding-left: 13px">
+	<h4>Employees Page</h4>
+</div>
+</div>
+
 <% include partials/header %>
 
-<h1>Employees Page</h1>
-
-<h2>Add new employee</h2>
-<fieldset>  
-  <form action="">
-    <label for="first-name-input">First Name:</label>
-    <input type="text" id='first-name-input' name="">
-    <br>
-
-    <label for="last-name-input">Last Name:</label>
-    <input type="text" id='last-name-input' name="">
-    <br>
-
-    <label for="birthday-input">Birthday:</label>
-    <input type="date" id='birthday-input' name="">
-    <br>
+<div class="modal-body;">
+	<div class="col-md-4" style="width:50%; float:left">
+		<h2 align="center" style="padding-top:5px; padding-bottom:-15px">Add new employee</h2>
+		<fieldset>  
+			<form action="">
+			 <div class="form-group;" style="padding-left:80px; padding-right:57px;">
+				<label for="first-name-input">First Name</label>
+				<input type="text" class="form-control" id="first-name-input" placeholder="">
+			 </div>
+			 <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
+				<label for="last-name-input">Last Name</label>
+				<input type="text" class="form-control" id="last-name-input" placeholder="">
+			 </div>
+			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+				<label for="birthday-input">Birthday</label>
+				<input type="date" class="form-control" id="birthday-input" placeholder="">
+			 </div>
+			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+				<label for="branch-input">Branch Location</label>
+				<select class="form-control" id="branch-input">
+					<option value="">---Select Branch---</option>
+					<option value="chicago">Chicago</option>
+					<option value="new york">New York City</option>
+					<option value="seoul">Seoul</option>
+					<option value="taipei">Taipei</option>
+				</select>
+			 </div>
+			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+				<label for="department-input">Department</label>
+				<select class="form-control" id="department-input">
+					<option value="">---Select Department---</option>
+					<option value="accounting">Accounting</option>
+					<option value="engineering">Engineering</option>
+					<option value="resources">Resources</option>
+					<option value="marketing">Marketing</option>
+				</select>
+			 </div>
+			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+				<label for="position-input">Position</label>
+				<select class="form-control" id="position-input">
+					<option value="">---Select Position---</option>
+					<option value="1">Junior Software Developer</option>
+					<option value="2">Sales Assistant</option>
+					<option value="3">Chief Technical Officer</option>
+				</select>
+			 </div>
+			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+				<label for="salary-input">Salary ($)</label>
+				<input type="number" class="form-control" id="salary-input" placeholder="">
+			 </div>
+			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+				<label for="start-date-input">Start Date</label>
+				<input type="date" class="form-control" id="start-date-input" placeholder="">
+			 </div>
+				
+			<div class="form-group;" style="padding-top:10px;padding-left:80px; padding-right:57px;">
+			<label style="padding-right:15px">Employment Status</label>
+			<label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value="1";>Yes</label>
+			<label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value= "0";>No</label>
+			</div> 
+			 <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
+				<label for="manager-input">Manager</label>
+				<select class="form-control" id="manager-input">
+					<option value="">---Select Manager---</option>
+					<option value="1">Ryan Yun</option>
+					<option value="2">David Chen</option>
+				</select>
+			 </div>
+			 <button type="submit" class="btn btn-primary mt-1" style="position:relative; left:220px; width: 175px;">Submit</button>
+			</form>
+		</fieldset>
+	</div>
 	
-    <!-- <label for="branch-input">Branch:</label>
-    <input type="text" id='branch-input' name="">
-    <br> -->
+	<div class="col-md-8" style="width:80%; float:right;">
+	<h2 align="center" style="padding-top:5px">Employees Data</h2>
+	<div class="table-wrapper-scroll-y" style="display:block; max-height: 650px; overflow-y: auto; -ms-overflow-style:-ms-autohiding-scrollbar;">
+	<table class="table table-hover">
+	<thead style="width:auto !important;">
+	<tr>
+	  <th>#</th>
+	  <th>First Name</th>
+	  <th>Last Name</th>
+	  <th>D.O.B</th>
+	  <th>Branch</th>
+	  <th>Department</th>
+	  <th>Position</th>
+	  <th>Salary</th>
+	  <th>Start Date</th>
+	  <th>Employed</th>
+	  <th>Manager</th>
+	</tr>
+	</thead>
+		<tbody>
+		<tr>
+		  <th scope="row">1</th>
+			<td>Ricky</td>
+			<td>Tan</td>
+			<td>09/30/1974</td>
+			<td>New York City</td>
+			<td>Engineering</td>
+			<td>CTO</td>
+			<td>$509995</td>
+			<td>01/01/2007</td>
+			<td>True</td>
+			<td>1</td>
+		</tr>
+		<tr>
+		<th scope="row">2</th>
+			<td>Michael</td>
+			<td>Giovanni</td>
+			<td>08/04/1986</td>
+			<td>New York City</td>
+			<td>Accounting</td>
+			<td>Junior Accountant</td>
+			<td>$61502</td>
+			<td>01/01/2011</td>
+			<td>True</td>
+			<td>1</td>
+		</tr>
+		</tr>
+		<tr>
+		<th scope="row">3</th>
+			<td>Peter</td>
+			<td>Wilheim</td>
+			<td>04/01/1990</td>
+			<td>Chicago</td>
+			<td>Engineering</td>
+			<td>Hardware Designer</td>
+			<td>$81502</td>
+			<td>06/19/2015</td>
+			<td>True</td>
+			<td>2</td>
+		</tr>
+		<th scope="row">4</th>
+			<td>Michelle</td>
+			<td>Stewart</td>
+			<td>11/09/1983</td>
+			<td>Chicago</td>
+			<td>Engineering</td>
+			<td>Engineering Manager</td>
+			<td>$102502</td>
+			<td>02/13/1999</td>
+			<td>True</td>
+			<td>2</td>
+		</tr>
+			<th scope="row">5</th>
+			<td>Harry</td>
+			<td>Chan</td>
+			<td>05/13/1992</td>
+			<td>Chicago</td>
+			<td>Engineering</td>
+			<td>Electrical Engineer</td>
+			<td>$92502</td>
+			<td>06/20/2015</td>
+			<td>True</td>
+			<td>2</td>
+		</tr>
+		<tr>
+		  <th scope="row">6</th>
+			<td>James</td>
+			<td>Parker</td>
+			<td>12/30/1984</td>
+			<td>New York City</td>
+			<td>Accounting</td>
+			<td>Junior Lawyer</td>
+			<td>$59995</td>
+			<td>01/01/2013</td>
+			<td>True</td>
+			<td>1</td>
+		</tr>
+		<tr>
+		  <th scope="row">7</th>
+			<td>Jackie</td>
+			<td>Tsai</td>
+			<td>09/30/1984</td>
+			<td>Taipei</td>
+			<td>Resources</td>
+			<td>Import Executive</td>
+			<td>$209995</td>
+			<td>02/01/1999</td>
+			<td>True</td>
+			<td>2</td>
+		</tr>
+		<tr>
+		  <th scope="row">8</th>
+			<td>Joon-hyuk</td>
+			<td>Choi</td>
+			<td>05/20/1988</td>
+			<td>Seoul</td>
+			<td>Resources</td>
+			<td>Import Export Officer</td>
+			<td>$59995</td>
+			<td>04/13/2007</td>
+			<td>True</td>
+			<td>2</td>
+		</tr>
+		<tr>
+		<th scope="row">8</th>
+			<td>Michael</td>
+			<td>Shen</td>
+			<td>05/20/1988</td>
+			<td>New York City</td>
+			<td>Marketing</td>
+			<td>Marketing Manager</td>
+			<td>$99995</td>
+			<td>03/13/2013</td>
+			<td>True</td>
+			<td>2</td>
+		</tr>
+		<tr>
+		<th scope="row">9</th>
+			<td>Julia</td>
+			<td>Howard</td>
+			<td>09/20/1986</td>
+			<td>New York City</td>
+			<td>Marketing</td>
+			<td>Account Executive</td>
+			<td>$49095</td>
+			<td>03/13/2015</td>
+			<td>True</td>
+			<td>1</td>
+		</tr>
+		<th scope="row">10</th>
+			<td>Neil</td>
+			<td>Gupta</td>
+			<td>09/20/1990</td>
+			<td>New York City</td>
+			<td>Marketing</td>
+			<td>Corporate Lawyer</td>
+			<td>$119095</td>
+			<td>03/13/2015</td>
+			<td>True</td>
+			<td>1</td>
+		</tr>
+		</tbody>
+	</table>
 
-    <label for="branch-input">Branch</label>
-    <select id="branch-input">
-        <option value="">--Select branch--</option>
-        <option value="chicago">Chicago</option>
-        <option value="nyc">New York City</option>
-        <option value="seoul">Seoul</option>
-        <option value="taipei">Taipei</option>        
-    </select>
-    <br>
+	</div>
+</div>
+</div>
 
-    <!-- <label for="department-input">Department:</label>
-    <input type="text" id='department-input' name="">
-    <br> -->
+<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
+<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px">Delete</button>
 
-    <label for="department-input">Department</label>
-    <select id="department-input">
-        <option value="">--Select department--</option>
-        <option value="accounting">Accounting</option>
-        <option value="engineering">Engineering</option>
-        <option value="hr">Human Resources</option>
-        <option value="marketing">Marketing</option>        
-    </select>
-    <br>
-	
-    <!-- <label for="position-input">Position:</label>
-    <input type="text" id='position-input' name="">
-    <br> -->
 
-    <label for="position-input">Position</label>
-    <select id="position-input">
-        <option value="">--Select position--</option>
-        <option value="1">Junior Software Developer</option>
-        <option value="2">Sales Assistant</option>
-        <option value="3">Chief Technical Officer</option>            
-    </select>
-    <br>
-	
-    <label for="salary-input">Salary:</label>
-    <input type="text" id='salary-input' name="">
-    <br>
-	
-    <label for="start-date-input">Start Date:</label>
-    <input type="date" id='start-date-input' name="">
-    <br>
-	
-    <label for="employment-status-input">Employment Status:</label>
-    <input type="text" id='employment-status-input' name="">
-    <br>
 
-    <!-- <label for="manager-input">Manager:</label>
-    <input type="text" id='manager-input' name="">
-    <br> -->
 
-    <label for="manager-input">Manager</label>
-    <select id="manager-input">
-        <option value="">--Select manager--</option>
-        <option value="1">Ryan Yun</option>
-        <option value="2">David Chen</option>               
-    </select>
-    <br>
 
-    <input type="submit">
-  </form>  
-</fieldset>
 
-<h2>Employees</h2>
-<table>
-  <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Birthday</th>
-	<th>Branch</th>
-	<th>Department</th>
-    <th>Position</th>
-    <th>Salary</th>
-	<th>Start Date</th>
-	<th>Employment Status</th>
-    <th>Manager</th>
-  </tr>
-  <tr>
-    <td>Lebron</td>
-    <td>James</td>
-    <td>12/30/1984</td>
-	<td>Los Angeles</td>
-	<td>Coaching</td>
-	<td>Small Forward</td>
-	<td>$5999595</td>
-	<td>01/01/2013</td>
-	<td>True</td>
-	<td>Jeanie Buss</td>
-  </tr>
-  <tr>
-    <td>Lonzo</td>
-    <td>Ball</td>
-    <td>10/27/1997</td>
-	<td>Los Angeles</td>
-	<td>Ball Handlers</td>
-	<td>Point Guard</td>
-	<td>$6998658</td>
-	<td>01/01/2018</td>
-	<td>True</td>
-	<td>Jeanie Buss</td>
-  </tr>
-  <tr>
-    <td>Kyle</td>
-    <td>Kuzma</td>
-    <td>07/25/1995</td>
-	<td>Michigan</td>
-	<td>Ball Handlers</td>
-	<td>Shooting Guard</td>
-	<td>$4124123</td>
-	<td>01/01/2018</td>
-	<td>True</td>
-	<td>Jeanie Buss</td>
-  </tr>
-    <tr>
-    <td>Magic</td>
-    <td>Johnson</td>
-    <td>09/14/1959</td>
-	<td>Michigan</td>
-	<td>Coaching</td>
-	<td>Point Guard</td>
-	<td>$696868</td>
-	<td>01/01/1979</td>
-	<td>True</td>
-	<td>Jeanie Buss</td>
-  </tr>
-    <tr>
-    <td>Wilt</td>
-    <td>Chamberlain</td>
-    <td>08/21/1936</td>
-	<td>Philadelphia</td>
-	<td>Defense</td>
-	<td>Center</td>
-	<td>$6666534</td>
-	<td>01/01/1959</td>
-	<td>True</td>
-	<td>Jeanie Buss</td>
-  </tr>
-   <tr>
-    <td>Kareem</td>
-    <td>Abdul-Jabbar</td>
-    <td>04/16/1947</td>
-	<td>New York</td>
-	<td>Defense</td>
-	<td>Center</td>
-	<td>$5442344</td>
-	<td>01/01/1969</td>
-	<td>True</td>
-	<td>Jeanie Buss</td>
-  </tr>
 
-  </tr>
-</table>
 
-<button>Update</button>
-<button>Delete</button>
 
 <% include partials/footer %>
