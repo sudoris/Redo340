@@ -8,8 +8,8 @@ const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-const port = process.env.port || 5191;
-// app.set('port', process.argv[2]);
+// const port = process.env.port || 5191;
+app.set('port', process.argv[2]);
 
 app.use(express.static("./public"));
 
@@ -46,9 +46,9 @@ app.get("/positions", (req, res) => {
 	res.render('positions');
 });
 
-app.listen(port, () => {
-	console.log("Server now listening on PORT:" + port);
-});
-// app.listen(app.get('port'), function(){
-//   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+// app.listen(port, () => {
+// 	console.log("Server now listening on PORT:" + port);
 // });
+app.listen(app.get('port'), function(){
+  console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+});
