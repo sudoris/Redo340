@@ -16,12 +16,12 @@
 				<input type="text" class="form-control" id="title-input" placeholder="">
 			 </div>
 			 
-			 <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
-			 <label style="padding-right:15px">Managing Duties:</label>
+			<div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
+			<label style="padding-right:15px">Managing Duties:</label>
 			<label class="radio-inline"><input type="radio" name="manager-role" id="yes-manager-duties">Yes</label>
 			<label class="radio-inline"><input type="radio" name="manager-role" id="no-manager-duties">No</label>
-			 </div> 
-			 <button type="submit" class="btn btn-primary mt-1" style="position:relative; left:220px; width: 175px;">Submit</button>
+			</div> 
+			<button type="submit" class="btn btn-primary mt-1" style="position:relative; left:220px; width: 175px;">Submit</button>
 			</form>
 		</fieldset>
 	</div>
@@ -42,11 +42,27 @@
 		<th scope="row">1</th>
 		<td>Junior Software Engineer</td>
 		<td>No</td>
+		<td>
+			<div>
+				<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
+			</div>
+			<div>
+				<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px; width:63px;margin-top:2px">Delete</button>
+			</div>
+		</td>   
 	</tr>
 	<tr>
 		<th scope="row">2</th>
 		<td>CTO</td>
 		<td>Yes</td>
+		<td>
+			<div>
+				<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
+			</div>
+			<div>
+				<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px; width:63px;margin-top:2px">Delete</button>
+			</div>
+		</td>   
 	</tr>
 	</tbody>
 	</table>
@@ -54,9 +70,6 @@
 	</div>
 </div>
 </div>
-
-<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
-<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px">Delete</button>
 
 <% include partials/footer %>
 
