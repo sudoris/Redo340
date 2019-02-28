@@ -8,9 +8,9 @@ const app = express();
 const db = mysql.createPool({
 	connectionLimit : 10,
 	host            : 'classmysql.engr.oregonstate.edu',
-	user            : 'cs340_chend5',
-	password        : '7530',
-	database        : 'cs340_chend5'
+	user            : 'cs340_user',
+	password        : 'userpass',
+	database        : 'cs340_user'
 });
 
 db.getConnection((err) => {
