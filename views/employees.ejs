@@ -110,7 +110,11 @@
 						<!-- <td><%= employee.position %></td> -->
 						<td><%= employee.salary %></td>
 						<td><%= employee.start_date %></td>
-						<td><%= employee.employment_status %></td>
+            <td>
+              <% if(employee.employment_status) { %>
+                <%= employee.employment_status %>
+              <% } %>
+            </td>
 						<!-- <td><%= employee.manager %></td> -->
 					</tr>
 				<% }) %>
