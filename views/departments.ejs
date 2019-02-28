@@ -41,35 +41,13 @@
 	</tr>
 	</thead>
 	<tbody>
-	<tr>
-		<th scope="row">1</th>
-		<td>Engineering</td>
-		<td>David Chen</td>
-		<td>1</td>
-		<td>
-			<div>
-				<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
-			</div>
-			<div>
-				<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px; width:63px;margin-top:2px">Delete</button>
-			</div>
-		</td>   
-	</tr>
-	<tr>
-		<th scope="row">2</th>
-		<td>Marketing</td>
-		<td>Ryan Yun</td>
-		<td>2</td>
-		<td>
-			<div>
-				<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
-			</div>
-			<div>
-				<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px; width:63px;margin-top:2px">Delete</button>
-			</div>
-		</td>         
-	</tr>
-	</tbody>
+		<% department.forEach((department, index) => { %>
+			<tr>
+				<th scope="row"><%= department.id %></th>
+				<td><%= department.name%></td>
+				<td><%= department.employee_count %></td>
+			</tr>
+		<% }) %>
 	</table>
 	</div>
 </div>

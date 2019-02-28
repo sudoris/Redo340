@@ -38,32 +38,13 @@
 	</tr>
 	</thead>
 	<tbody>
-	<tr>
-		<th scope="row">1</th>
-		<td>Junior Software Engineer</td>
-		<td>No</td>
-		<td>
-			<div>
-				<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
-			</div>
-			<div>
-				<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px; width:63px;margin-top:2px">Delete</button>
-			</div>
-		</td>   
-	</tr>
-	<tr>
-		<th scope="row">2</th>
-		<td>CTO</td>
-		<td>Yes</td>
-		<td>
-			<div>
-				<button type="button" class="btn btn-primary btn-sm" style="position:relative; left:15px">Update</button>
-			</div>
-			<div>
-				<button type="button" class="btn btn-secondary btn-sm" style="position:relative; left :15px; width:63px;margin-top:2px">Delete</button>
-			</div>
-		</td>   
-	</tr>
+		<% position.forEach((position, index) => { %>
+			<tr>
+				<th scope="row"><%= position.id %></th>
+				<td><%= position.title %></td>
+				<td><%= position.managerial_duties %></td>
+			</tr>
+		<% }) %>
 	</tbody>
 	</table>
 
