@@ -23,7 +23,7 @@
 				<label for="birthday-input">Birthday</label>
 				<input type="date" class="form-control" id="birthday-input" placeholder="">
 			 </div>
-			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+			 <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
 				<label for="branch-input">Branch Location</label>
 				<select class="form-control" id="branch-input">
 					<option value="">---Select Branch---</option>
@@ -51,7 +51,7 @@
 					<option value="2">Sales Assistant</option>
 					<option value="3">Chief Technical Officer</option>
 				</select>
-			 </div>
+			 </div> -->
 			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
 				<label for="salary-input">Salary ($)</label>
 				<input type="number" class="form-control" id="salary-input" placeholder="">
@@ -66,15 +66,15 @@
 			<label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value="1";>Yes</label>
 			<label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value= "0";>No</label>
 			</div> 
-			 <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
+			 <!-- <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
 				<label for="manager-input">Manager</label>
 				<select class="form-control" id="manager-input">
 					<option value="">---Select Manager---</option>
 					<option value="1">Ryan Yun</option>
 					<option value="2">David Chen</option>
 				</select>
-			 </div>
-			 <button type="submit" class="btn btn-primary mt-1" style="position:relative; left:220px; width: 175px;">Submit</button>
+			 </div> -->
+			 <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Submit</button>
 			</form>
 		</fieldset>
 	</div>
@@ -89,13 +89,13 @@
 	  <th>First Name</th>
 	  <th>Last Name</th>
 	  <th>D.O.B.</th>
-	  <th>Branch</th>
-	  <th>Department</th>
-	  <th>Position</th>
+	  <!-- <th>Branch</th> -->
+	  <!-- <th>Department</th> -->
+	  <!-- <th>Position</th> -->
 	  <th>Salary</th>
 	  <th>Start Date</th>
 	  <th>Employed</th>
-	  <th>Manager</th>
+	  <!-- <th>Manager</th> -->
 	</tr>
 	</thead>
 		<tbody>
@@ -105,13 +105,17 @@
 						<td><%= employee.fname %></td>
 						<td><%= employee.lname %></td>
 						<td><%= employee.birthday %></td>
-						<td><%= employee.branch %></td>
-						<td><%= employee.department %></td>
-						<td><%= employee.position %></td>
+						<!-- <td><%= employee.branch %></td> -->
+						<!-- <td><%= employee.department %></td> -->
+						<!-- <td><%= employee.position %></td> -->
 						<td><%= employee.salary %></td>
 						<td><%= employee.start_date %></td>
-						<td><%= employee.employment_status %></td>
-						<td><%= employee.manager %></td>
+            <td>
+              <% if(employee.employment_status) { %>
+                <%= employee.employment_status %>
+              <% } %>
+            </td>
+						<!-- <td><%= employee.manager %></td> -->
 					</tr>
 				<% }) %>
 		</tbody>
