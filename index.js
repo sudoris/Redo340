@@ -14,10 +14,10 @@ app.set('view engine', 'ejs');
 
 const port = process.env.port || 5191;
 // app.set('port', process.argv[2]);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(express.static("./public"));
-
-app.use(bodyParser.json());
 
 // app.use("/api", require("./routes/api"));
 
@@ -48,6 +48,27 @@ app.get("/employees", (req, res) => {
 		});
 	}) 
 });
+
+app.post("/employees", (req, res) => {  
+
+  let fname = req.body["first-name"];
+  let lname = req.body["last-name"];
+  let birthday = req.body.birthday;
+  let salary = req.body.salary;
+  let startDate = req.body["start-date"];
+  let employeeStatus = req.body["employee-stat"];  
+
+  let query = "INSERT INTO `employee` (fname, lname, birthday, salary, start_date, employment_status) VALUES ('" +
+      fname + "', '" + lname + "', '" + birthday + "', '" + salary + "', '" + startDate + "', '" + employeeStatus + "')";
+
+  db.query(query, (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.redirect('/employees');
+  });  
+});
+
 
 app.get("/departments", (req, res) => {
 	let query = `SELECT * FROM department`;
