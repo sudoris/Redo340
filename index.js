@@ -1,25 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mysql = require('mysql');
+const mysql = require('./dbcon.js');
 
 
 // set up express app
 const app = express();
-const db = mysql.createPool({
-	connectionLimit : 10,
-	host            : 'classmysql.engr.oregonstate.edu',
-	user            : 'cs340_user',
-	password        : 'userpass',
-	database        : 'cs340_user'
-});
-
-db.getConnection((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log('Connected to database');
-});
-global.db = db;
+app.set('mysql', mysql);
+global.db = mysql.pool;
 
 // set 
 app.use(express.static('public'));
