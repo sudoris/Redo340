@@ -58,13 +58,14 @@ app.post("/employees", (req, res) => {
   let fname = req.body["first-name"];
   let lname = req.body["last-name"];
   let birthday = req.body.birthday;
-  let salary = req.body.salary;
+  let salary = req.body.["monthly-salary"];
   let startDate = req.body["start-date"];
   let employeeStatus = req.body["employee-stat"];  
 
-  let query = "INSERT INTO `employee` (fname, lname, birthday, salary, start_date, employment_status) VALUES ('" +
+  let query = "INSERT INTO `employee` (fname, lname, birthday, monthly_salary, start_date, employment_status) VALUES ('" +
       fname + "', '" + lname + "', '" + birthday + "', '" + salary + "', '" + startDate + "', '" + employeeStatus + "')";
 
+	
   db.query(query, (err, result) => {
       if (err) {
           return res.status(500).send(err);
