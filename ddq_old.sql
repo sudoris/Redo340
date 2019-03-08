@@ -1,14 +1,33 @@
 CREATE TABLE `employee` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
-`fname` varchar(40),
-`lname` varchar(40),
-`birthday` varchar(10),  
-`salary` int,
-`start_date` varchar(10),
-`employment_status` boolean,
-FOREIGN KEY (`manager`) REFERENCES `employee`(`id`) 
-PRIMARY KEY (id)
+  `emp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `fname` varchar(40),
+  `lname` varchar(40),
+  `birthday` varchar(10),  
+  -- `branch_id` int,     can get branch from department
+  `department_id` int,
+  `position_id` int,
+  `salary` int,
+  `start_date` varchar(10),
+  `employment_status` varchar(20),
+  `manager_id` int,
+  PRIMARY KEY (`emp_id`),  
+  FOREIGN KEY (`department_id`) REFERENCES `department`(`department_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`position_id`) REFERENCES `employee`(`position_id`) ON DELETE SET NULL,
+  FOREIGN KEY (`manager_id`) REFERENCES `employee`(`emp_id`) ON DELETE SET NULL
 ) ENGINE=InnoDB;
+
+-- Employee ID Number (type: int / constraints: not null, unique / autoincrement) 
+-- First Name (type: varchar(40)  / constraints: not null)
+-- Last Name (type: varchar(40)  / constraints: not null)
+-- Birthday (type: date / constraint: greater than or equal to 18)
+-- Branch: Foreign Key to Branch (type: int / constraint: not null)
+-- Department: Foreign Key to Department (type: int / constraint: not null)
+-- Position : Foreign Key to Position (type: int /  constraint: not null)
+-- Salary (type: int /  constraint: not null)
+-- Start Date (type: datetime / constraint: not null)
+-- Employment Status (type: boolean / constraint: not null)
+-- Manager: Foreign Key to Employee (type: int)
+
 
 --INSERT INTO `employee` VALUES ('Ryan','Yun', '1992-05-21', 9999, '2018-10-01' 
 --  (SELECT id from employee WHERE fname = 'David')
@@ -53,7 +72,7 @@ CREATE TABLE `employee_to_position` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `department` (
-`id` int(11) NOT NULL AUTO_INCREMENT,
+`department_id` int(11) NOT NULL AUTO_INCREMENT,
 `name` varchar(150),
 `employee_count` int,
 PRIMARY KEY (id)
