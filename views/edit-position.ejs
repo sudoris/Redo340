@@ -1,0 +1,19 @@
+<% include partials/header %>
+
+<fieldset>  
+    <form action="" method="POST" enctype="application/x-www-form-urlencoded">
+     <div class="form-group;" style="padding-left:80px; padding-right:57px;">
+        <label for="title-input">Title:</label>
+        <input type="text" class="form-control" id="title-input" name="title" placeholder="">
+     </div>
+     
+    <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
+    <label style="padding-right:15px">Managing Duties:</label>
+    <label class="radio-inline"><input type="radio" name="manager-role" id="yes-manager-duties" value = "1">Yes</label>
+    <label class="radio-inline"><input type="radio" name="manager-role" id="no-manager-duties" value = "0">No</label>
+    </div> 
+    <button type="submit" class="btn btn-primary mt-2" style="position:relative; left:220px; width: 175px;">Submit</button>
+    </form>
+</fieldset>
+
+<% include partials/footer %>

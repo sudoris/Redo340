@@ -1,3 +1,4 @@
+DDQ
 CREATE TABLE `employee` (
   `emp_id` int(11) NOT NULL AUTO_INCREMENT,
   `fname` varchar(40),

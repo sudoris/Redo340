@@ -1,16 +1,6 @@
-<!-- <div class="border-bottom">
-<div class="container; d-flex justify-content-left" style="background-color: #99d6ff;color:black; padding-top:10px; padding-left: 13px">
-	<h4>Employees Page</h4>
-</div>
-</div> -->
-
 <% include partials/header %>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4">
-      <h2 align="center" style="padding-top:5px; padding-bottom:-15px">Add new employee</h2>    
-      <fieldset>  
+<fieldset>  
         <form action="" method="POST" enctype="application/x-www-form-urlencoded">
         <div class="form-group;" style="padding-left:80px; padding-right:57px;">
           <label for="first-name-input">First Name</label>
@@ -77,64 +67,6 @@
         </div>
         <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Submit</button>
         </form>
-      </fieldset>
-    </div>
-    
-    <div class="col-md-8 pr-5">
-      <h2 align="center" style="padding-top:5px">Employees</h2>
-      <div class="table-wrapper-scroll-y" style="display:block; max-height: 650px; overflow-y: auto; -ms-overflow-style:-ms-autohiding-scrollbar;">
-      <table class="table table-hover">
-      <thead style="width:auto !important;">
-      <tr>
-        <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>D.O.B.</th>
-        <!-- <th>Branch</th> -->
-        <th>Department</th>
-        <th>Position</th>
-        <th>Monthly Salary</th>
-        <th>Start Date</th>
-        <th>Employment Status</th>
-        <th>Manager</th>
-      </tr>
-      </thead>
-        <tbody>
-            <% employee.forEach((employee) => { %>
-              <tr>
-                <th scope="row"><%= employee.employee_id %></th>
-                <td><%= employee.fname %></td>
-                <td><%= employee.lname %></td>
-                <td><%= employee.birthday %></td>
-                <!-- <td><%= employee.branch_id %></td> -->
-                <td><%= employee.department_id %></td>
-                <td><%= employee.position_id %></td>
-                <td><%= employee.monthly_salary %></td>
-                <td><%= employee.start_date %></td>
-                <td><%= (employee.employment_status) %></td>                 
-                <td><%= employee.manager_id %></td>
-                <td>
-                  <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Update</button>
-                  <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Delete</button>
-                </td>
-              </tr>
-            <% }) %>
-        </tbody>
-      </table>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<script>
-const updateEmployee = function(id) {
-  let origin = window.location.origin  
-  let url = origin + "/edit/" + id
-  window.location.href = url
-}
-
-</script>
+</fieldset>
 
 <% include partials/footer %>
