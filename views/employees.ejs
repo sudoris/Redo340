@@ -24,7 +24,7 @@
           <label for="birthday-input">Birthday</label>
           <input type="date" class="form-control" name="birthday" id="birthday-input" placeholder="">
         </div>
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+        <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
           <label for="branch-input">Branch Location</label>
           <select class="form-control" id="branch-input">
             <option value="">---Select Branch---</option>          
@@ -33,8 +33,8 @@
             <option value="seoul">Seoul</option>
             <option value="taipei">Taipei</option>
           </select>
-        </div>
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+        </div> -->
+        <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
           <label for="department-input">Department</label>
           <select class="form-control" id="department-input">
             <option value="">---Select Department---</option>
@@ -52,7 +52,7 @@
             <option value="2">Sales Assistant</option>
             <option value="3">Chief Technical Officer</option>
           </select>
-        </div>
+        </div> -->
         <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
           <label for="salary-input">Salary ($)</label>
           <input type="number" class="form-control" name="monthly-salary" id="salary-input" placeholder="">
@@ -67,14 +67,14 @@
           <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value="";>Current</label>
           <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value= "";>Previous</label>      
         </div> 
-        <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
+        <!-- <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
           <label for="manager-input">Manager</label>
           <select class="form-control" id="manager-input">
             <option value="">---Select Manager---</option>
             <option value="1">Ryan Yun</option>
             <option value="2">David Chen</option>
           </select>
-        </div>
+        </div> -->
         <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Submit</button>
         </form>
       </fieldset>
@@ -90,8 +90,8 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>D.O.B.</th>
-        <!-- <th>Branch</th> -->
-        <th>Department</th>
+        <!-- <th>Branch</th>  -->
+        <th>Department</th> 
         <th>Position</th>
         <th>Monthly Salary</th>
         <th>Start Date</th>
@@ -115,7 +115,8 @@
                 <td><%= employee.manager_id %></td>
                 <td>
                   <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Update</button>
-                  <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Delete</button>
+                  <!-- <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Delete</button> -->
+                  <a href="./employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Delete</a>
                 </td>
               </tr>
             <% }) %>
@@ -131,9 +132,10 @@
 <script>
 const updateEmployee = function(id) {
   let origin = window.location.origin  
-  let url = origin + "/edit/" + id
+  let url = origin + "/employees/edit/" + id
   window.location.href = url
 }
+
 
 </script>
 

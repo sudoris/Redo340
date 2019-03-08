@@ -54,7 +54,22 @@ app.get("/employees", (req, res) => {
 });
 
 app.get("/employees/edit/:id", (req, res) => {
-	console.log(req.params)
+  console.log(req.params)
+
+  let query = `SELECT * FROM employee WHERE employee_id="${req.params.id}"`
+  
+  db.query(query, (err, result)=>
+	{
+		if(err)
+		{
+      console.log('err')
+			res.redirect('/');
+    }
+    console.log(result[0])
+		res.render('edit-employee', {
+		  employee: result[0]
+		});
+	})  
  
 	// db.query(query, (err, result)=>
 	// {
@@ -88,6 +103,41 @@ app.post("/employees", (req, res) => {
       res.redirect('/employees');
   });  
 });
+
+app.post("/employees/edit/:id", (req, res) => {  
+  
+  let employee_id = req.body.employee_id
+  let fname = req.body["first-name"];
+  let lname = req.body["last-name"];
+  // let birthday = req.body.birthday;
+  let monthlySalary = req.body["monthly-salary"];
+  // let startDate = req.body["start-date"];
+  // let employeeStatus = req.body["employee-stat"];  
+
+  let query = "UPDATE `employee` SET `fname` = '" + fname + "', `lname` = '" + lname + "', `monthly_salary` = '" + monthlySalary + "' WHERE `employee`.`employee_id` = '" + employee_id + "'";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.redirect('/');
+        });
+});
+
+app.get("/employees/delete/:id", (req, res) => {  
+  
+      console.log('in delete route')
+      console.log(req.params)
+        
+      let deleteEmployeeQuery = 'DELETE FROM employee WHERE employee_id = "' + req.params.id + '"';
+                        
+      db.query(deleteEmployeeQuery, (err, result) => {
+          if (err) {
+              return res.status(500).send(err);
+          }
+          res.redirect('/employees');
+      });
+    });
+        
 /* ----------------------------------------------------------------------------------------- */
 /* ---------------------------------- DEPARTMENTS ------------------------------------------ */
 /* ----------------------------------------------------------------------------------------- */
@@ -196,6 +246,6 @@ app.listen(port, () => {
 });
 
 // CHANGE THIS @@
-//app.listen(app.get('port'), function(){
-//console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-//});
+// app.listen(app.get('port'), function(){
+// console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+// });
