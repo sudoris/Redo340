@@ -50,6 +50,21 @@ app.get("/employees", (req, res) => {
 	}) 
 });
 
+app.get("/employees/edit/:id", (req, res) => {
+	console.log(req.params)
+ 
+	// db.query(query, (err, result)=>
+	// {
+	// 	if(err)
+	// 	{
+	// 		res.redirect('/');
+	// 	}
+	// 	res.render('employees', {
+	// 	employee:result
+	// 	});
+	// }) 
+});
+
 app.post("/employees", (req, res) => {  
 
   let fname = req.body["first-name"];

@@ -114,8 +114,8 @@
                 <td><%= (employee.employment_status) %></td>                 
                 <td><%= employee.manager_id %></td>
                 <td>
-                  <button value="<%= employee.employee_id %>">Update</button>
-                  <button value="<%= employee.employee_id %>">Delete</button>
+                  <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Update</button>
+                  <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Delete</button>
                 </td>
               </tr>
             <% }) %>
@@ -129,7 +129,11 @@
 
 
 <script>
-
+const updateEmployee = function(id) {
+  let origin = window.location.origin  
+  let url = origin + "/edit/" + id
+  window.location.href = url
+}
 
 </script>
 
