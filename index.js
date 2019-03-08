@@ -12,8 +12,10 @@ global.db = mysql.pool;
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
+// CHANGE THIS %%%
 const port = process.env.port || 5191;
 // app.set('port', process.argv[2]);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -33,7 +35,9 @@ app.get("/", (req, res) => {
 app.get("/index", (req, res) => {
 	res.render('index');
 });
-
+/* --------------------------------------------------------------------------------------- */
+/* ---------------------------------- EMPLOYEES ------------------------------------------ */
+/* --------------------------------------------------------------------------------------- */
 app.get("/employees", (req, res) => {
 	let query = `SELECT * FROM employee`;
 
@@ -68,8 +72,9 @@ app.post("/employees", (req, res) => {
       res.redirect('/employees');
   });  
 });
-
-
+/* ----------------------------------------------------------------------------------------- */
+/* ---------------------------------- DEPARTMENTS ------------------------------------------ */
+/* ----------------------------------------------------------------------------------------- */
 app.get("/departments", (req, res) => {
 	let query = `SELECT * FROM department`;
 
@@ -85,7 +90,25 @@ app.get("/departments", (req, res) => {
 	})
 });
 
-app.get("/branches", function(req, res){
+app.post("/departments", (req, res) => {  
+
+	let deptName= req.body["department-name"]; 
+  
+	let query = "INSERT INTO `department` (name) VALUES ('" +
+		deptName + "')";
+  
+	db.query(query, (err, result) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		res.redirect('/departments');
+	});  
+  });
+
+/* -------------------------------------------------------------------------------------- */
+/* ---------------------------------- BRANCHES ------------------------------------------ */
+/* -------------------------------------------------------------------------------------- */
+app.get("/branches", function(req, res){ // BRANCH GET REQUEST
 
 	let query = `SELECT * FROM branch`;
 
@@ -101,7 +124,25 @@ app.get("/branches", function(req, res){
 	})
 });
 
-app.get("/positions", (req, res) => {
+app.post("/branches", (req, res) => { // BRANCH POST REQUEST
+
+	let branchCity= req.body["branch-city"]; 
+	let branchCountry = req.body["branch-country"];
+  
+	let query = "INSERT INTO `branch` (city_name, country) VALUES ('" +
+		branchCity + "', '" + branchCountry + "')";
+  
+	db.query(query, (err, result) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		res.redirect('/branches');
+	});  
+  });
+/* --------------------------------------------------------------------------------------- */
+/* ---------------------------------- POSITIONS ------------------------------------------ */
+/* --------------------------------------------------------------------------------------- */
+app.get("/positions", (req, res) => { // POSITIONS GET REQUEST
 	let query = `SELECT * FROM position`;
 
 	db.query(query, (err, result)=>
@@ -116,10 +157,29 @@ app.get("/positions", (req, res) => {
 	})
 });
 
+app.post("/positions", (req, res) => {   // POSITIONS POST REQUEST
+
+	let titleName= req.body["title"]; 
+	let manageStat = req.body["manager-role"];
+  
+	let query = "INSERT INTO `position` (title, managerial_duties) VALUES ('" +
+		titleName + "', '" + manageStat + "')";
+  
+	db.query(query, (err, result) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		res.redirect('/positions');
+	});  
+  });
+
+/* ---------------------------------------------------------------------------------------- */
+
 app.listen(port, () => {
 	console.log("Server now listening on PORT:" + port);
 });
 
-// app.listen(app.get('port'), function(){
-//   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-// });
+// CHANGE THIS @@
+//app.listen(app.get('port'), function(){
+//console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+//});

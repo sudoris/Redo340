@@ -10,18 +10,18 @@
 	<div class="col-md-4" style="width:50%; float:left">
 		<h2 align="center" style="padding-top:5px; padding-bottom:-15px">Add new position</h2>
 		<fieldset>  
-			<form action="">
+			<form action="" method="POST" enctype="application/x-www-form-urlencoded">
 			 <div class="form-group;" style="padding-left:80px; padding-right:57px;">
 				<label for="title-input">Title:</label>
-				<input type="text" class="form-control" id="title-input" placeholder="">
+				<input type="text" class="form-control" id="title-input" name="title" placeholder="">
 			 </div>
 			 
 			<div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
 			<label style="padding-right:15px">Managing Duties:</label>
-			<label class="radio-inline"><input type="radio" name="manager-role" id="yes-manager-duties">Yes</label>
-			<label class="radio-inline"><input type="radio" name="manager-role" id="no-manager-duties">No</label>
+			<label class="radio-inline"><input type="radio" name="manager-role" id="yes-manager-duties" value = "1">Yes</label>
+			<label class="radio-inline"><input type="radio" name="manager-role" id="no-manager-duties" value = "0">No</label>
 			</div> 
-			<button type="submit" class="btn btn-primary mt-1" style="position:relative; left:220px; width: 175px;">Submit</button>
+			<button type="submit" class="btn btn-primary mt-2" style="position:relative; left:220px; width: 175px;">Submit</button>
 			</form>
 		</fieldset>
 	</div>
@@ -32,7 +32,7 @@
 	<table class="table table-hover">
 	<thead style="width:auto !important;">
 	<tr>
-	  <th>#</th>
+	  <th>ID #</th>
 	  <th>Title</th>
 	  <th>Managerial Duties</th>
 	</tr>
@@ -40,9 +40,14 @@
 	<tbody>
 		<% position.forEach((position, index) => { %>
 			<tr>
-				<th scope="row"><%= position.id %></th>
+				<th scope="row"><%= position.position_ID %></th>
 				<td><%= position.title %></td>
-				<td><%= position.managerial_duties %></td>
+				<td><% if (position.managerial_duties === 1) { %>
+					True                          
+				  <% } else { %>
+					False
+				  <% } %>
+				</td>
 			</tr>
 		<% }) %>
 	</tbody>

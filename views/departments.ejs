@@ -13,17 +13,17 @@
 			<form action="" method="POST" enctype="application/x-www-form-urlencoded">
 			 <div class="form-group;" style="padding-left:80px; padding-right:57px;">
 				<label for="department-name-input">Name of Department:</label>
-				<input type="text" class="form-control" id="department-name-input" placeholder="">
+				<input type="text" class="form-control" id="department-name-input" name="department-name" placeholder="">
 			 </div>
-			 <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
+			<!--  <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
 				<label for="department-head-input">Department Head Employee ID#</label>
 				<input type="text" class="form-control" id="department-head-input" placeholder="">
-			 </div>
-			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+			 </div> -->
+			 <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
 				<label for="branch-input">Branch ID#</label>
 				<input type="number" class="form-control" id="branch-input" placeholder="">
-			 </div>
-			 <button type="submit" class="btn btn-primary mt-1" style="position:relative; left:220px; width: 175px;">Submit</button>
+			 </div> -->
+			 <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Submit</button>
 			</form>
 		</fieldset>
 	</div>
@@ -34,10 +34,10 @@
 	<table class="table table-hover">
 	<thead style="width:auto !important;">
 	<tr>
-	  <th>#</th>
+	  <th>ID #</th>
 	  <th>Department Name</th>
-	  <th>Head of Department</th>
-	  <th>Branch ID#</th>
+<!-- 	  <th>Head of Department</th>
+	  <th>Branch ID#</th> -->
 	</tr>
 	</thead>
 	<tbody>
@@ -45,7 +45,7 @@
 			<tr>
 				<th scope="row"><%= department.id %></th>
 				<td><%= department.name%></td>
-				<td><%= department.employee_count %></td>
+				<!-- <td><%= department.employee_count %></td> -->
 			</tr>
 		<% }) %>
 	</table>
