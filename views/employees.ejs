@@ -27,7 +27,7 @@
         <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
           <label for="branch-input">Branch Location</label>
           <select class="form-control" id="branch-input">
-            <option value="">---Select Branch---</option>
+            <option value="">---Select Branch---</option>          
             <option value="chicago">Chicago</option>
             <option value="new york">New York City</option>
             <option value="seoul">Seoul</option>
@@ -90,27 +90,33 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>D.O.B.</th>
+        <!-- <th>Branch</th> -->
         <th>Department</th>
         <th>Position</th>
-        <th>Salary</th>
+        <th>Monthly Salary</th>
         <th>Start Date</th>
         <th>Employment Status</th>
         <th>Manager</th>
       </tr>
       </thead>
         <tbody>
-            <% employee.forEach((employee, index) => { %>
+            <% employee.forEach((employee) => { %>
               <tr>
-                <th scope="row"><%= employee.id %></th>
+                <th scope="row"><%= employee.employee_id %></th>
                 <td><%= employee.fname %></td>
                 <td><%= employee.lname %></td>
                 <td><%= employee.birthday %></td>
+                <!-- <td><%= employee.branch_id %></td> -->
                 <td><%= employee.department_id %></td>
                 <td><%= employee.position_id %></td>
                 <td><%= employee.monthly_salary %></td>
                 <td><%= employee.start_date %></td>
-                <td><%= employee.employment_status %></td>                 
+                <td><%= (employee.employment_status) %></td>                 
                 <td><%= employee.manager_id %></td>
+                <td>
+                  <button value="<%= employee.employee_id %>">Update</button>
+                  <button value="<%= employee.employee_id %>">Delete</button>
+                </td>
               </tr>
             <% }) %>
         </tbody>
@@ -121,5 +127,10 @@
   </div>
 </div>
 
+
+<script>
+
+
+</script>
 
 <% include partials/footer %>

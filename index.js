@@ -40,7 +40,7 @@ app.get("/index", (req, res) => {
 /* --------------------------------------------------------------------------------------- */
 app.get("/employees", (req, res) => {
 	let query = `SELECT * FROM employee`;
-
+ 
 	db.query(query, (err, result)=>
 	{
 		if(err)
@@ -58,12 +58,12 @@ app.post("/employees", (req, res) => {
   let fname = req.body["first-name"];
   let lname = req.body["last-name"];
   let birthday = req.body.birthday;
-  let salary = req.body.["monthly-salary"];
+  let monthlySalary = req.body["monthly-salary"];
   let startDate = req.body["start-date"];
   let employeeStatus = req.body["employee-stat"];  
 
   let query = "INSERT INTO `employee` (fname, lname, birthday, monthly_salary, start_date, employment_status) VALUES ('" +
-      fname + "', '" + lname + "', '" + birthday + "', '" + salary + "', '" + startDate + "', '" + employeeStatus + "')";
+      fname + "', '" + lname + "', '" + birthday + "', '" + monthlySalary + "', '" + startDate + "', '" + employeeStatus + "')";
 
 	
   db.query(query, (err, result) => {
