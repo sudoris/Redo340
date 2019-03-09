@@ -114,8 +114,9 @@
                 <td><%= (employee.employment_status) %></td>                 
                 <td><%= employee.manager_id %></td>
                 <td>
-                  <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Update</button>
+                  <!-- <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Update</button> -->
                   <!-- <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Delete</button> -->
+                  <a href="./employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Update</a>
                   <a href="./employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Delete</a>
                 </td>
               </tr>
@@ -130,11 +131,11 @@
 
 
 <script>
-const updateEmployee = function(id) {
-  let origin = window.location.origin  
-  let url = origin + "/employees/edit/" + id
-  window.location.href = url
-}
+// const updateEmployee = function(id) {
+//   let origin = window.location.origin  
+//   let url = origin + "/employees/edit/" + id
+//   window.location.href = url
+// }
 
 
 </script>

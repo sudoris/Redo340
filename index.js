@@ -54,7 +54,7 @@ app.get("/employees", (req, res) => {
 });
 
 app.get("/employees/edit/:id", (req, res) => {
-  console.log(req.params)
+  
 
   let query = `SELECT * FROM employee WHERE employee_id="${req.params.id}"`
   
@@ -65,7 +65,7 @@ app.get("/employees/edit/:id", (req, res) => {
       console.log('err')
 			res.redirect('/');
     }
-    console.log(result[0])
+    
 		res.render('edit-employee', {
 		  employee: result[0]
 		});
@@ -119,14 +119,13 @@ app.post("/employees/edit/:id", (req, res) => {
             if (err) {
                 return res.status(500).send(err);
             }
-            res.redirect('/');
+            res.redirect('/employees');
         });
 });
 
 app.get("/employees/delete/:id", (req, res) => {  
   
-      console.log('in delete route')
-      console.log(req.params)
+    
         
       let deleteEmployeeQuery = 'DELETE FROM employee WHERE employee_id = "' + req.params.id + '"';
                         
