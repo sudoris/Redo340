@@ -240,9 +240,9 @@ app.post("/positions", (req, res) => {   // POSITIONS POST REQUEST
 
 /* ---------------------------------------------------------------------------------------- */
 
-app.listen(port, () => {
-	console.log("Server now listening on PORT:" + port);
-});
+// app.listen(port, () => {
+// 	console.log("Server now listening on PORT:" + port);
+// });
 
 // CHANGE THIS @@
 app.listen(app.get('port'), function(){
