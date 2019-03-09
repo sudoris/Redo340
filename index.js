@@ -13,8 +13,8 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // CHANGE THIS %%%
-const port = process.env.port || 5191;
-// app.set('port', process.argv[2]);
+// const port = process.env.port || 5191;
+app.set('port', process.argv[2]);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -245,6 +245,6 @@ app.listen(port, () => {
 });
 
 // CHANGE THIS @@
-// app.listen(app.get('port'), function(){
-// console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-// });
+app.listen(app.get('port'), function(){
+console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
+});
