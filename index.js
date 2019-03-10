@@ -14,7 +14,7 @@ app.set('view engine', 'ejs');
 
 // CHANGE THIS %%%
 // const port = process.env.port || 5191;
-app.set('port', process.argv[2]);
+app.set('port', process.argv[2] || 5191);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

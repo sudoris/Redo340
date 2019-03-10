@@ -117,7 +117,9 @@
                   <!-- <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Update</button> -->
                   <!-- <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Delete</button> -->
                   <a href="./employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Update</a>
-                  <a href="./employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Delete</a>
+                  <!-- <a href="./employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Delete</a> -->
+                  <button class="btn btn-sm btn-danger" onclick="deleteEmployee(<%= employee.employee_id %>)">Delete</a>
+
                 </td>
               </tr>
             <% }) %>
@@ -136,6 +138,9 @@
 //   let url = origin + "/employees/edit/" + id
 //   window.location.href = url
 // }
+function deleteEmployee(id) {
+  console.log(id)
+}
 
 
 </script>
