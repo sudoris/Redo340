@@ -1,147 +1,138 @@
-<!-- <div class="border-bottom">
-<div class="container; d-flex justify-content-left" style="background-color: #99d6ff;color:black; padding-top:10px; padding-left: 13px">
-	<h4>Employees Page</h4>
-</div>
-</div> -->
-
 <% include partials/header %>
 
-<div class="container-fluid">
+<div class="container-fluid mt-2 mx-4">
   <div class="row">
-    <div class="col-md-4">
-      <h2 align="center" style="padding-top:5px; padding-bottom:-15px">Add new employee</h2>    
-      <fieldset>  
-        <form action="" method="POST" enctype="application/x-www-form-urlencoded">
-        <div class="form-group;" style="padding-left:80px; padding-right:57px;">
-          <label for="first-name-input">First Name</label>
-          <input type="text" class="form-control" name="first-name" id="first-name-input" placeholder="">
-        </div>
-        <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
-          <label for="last-name-input">Last Name</label>
-          <input type="text" class="form-control" name="last-name" id="last-name-input" placeholder="">
-        </div>
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="birthday-input">Birthday</label>
-          <input type="date" class="form-control" name="birthday" id="birthday-input" placeholder="">
-        </div>
-        <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="branch-input">Branch Location</label>
-          <select class="form-control" id="branch-input">
-            <option value="">---Select Branch---</option>          
-            <option value="chicago">Chicago</option>
-            <option value="new york">New York City</option>
-            <option value="seoul">Seoul</option>
-            <option value="taipei">Taipei</option>
-          </select>
-        </div> -->
-        <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="department-input">Department</label>
-          <select class="form-control" id="department-input">
-            <option value="">---Select Department---</option>
-            <option value="accounting">Accounting</option>
-            <option value="engineering">Engineering</option>
-            <option value="resources">Resources</option>
-            <option value="marketing">Marketing</option>
-          </select>
-        </div>
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="position-input">Position</label>
-          <select class="form-control" id="position-input">
-            <option value="">---Select Position---</option>
-            <option value="1">Junior Software Developer</option>
-            <option value="2">Sales Assistant</option>
-            <option value="3">Chief Technical Officer</option>
-          </select>
-        </div> -->
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="salary-input">Salary ($)</label>
-          <input type="number" class="form-control" name="monthly-salary" id="salary-input" placeholder="">
-        </div>
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="start-date-input">Start Date</label>
-          <input type="date" class="form-control" name="start-date" id="start-date-input" placeholder="">
-        </div>
-          
-        <div class="form-group;" style="padding-top:10px;padding-left:80px; padding-right:57px;">
-          <label style="padding-right:15px">Employment Status</label>
-          <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value="";>Current</label>
-          <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value= "";>Previous</label>      
-        </div> 
-        <!-- <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
-          <label for="manager-input">Manager</label>
-          <select class="form-control" id="manager-input">
-            <option value="">---Select Manager---</option>
-            <option value="1">Ryan Yun</option>
-            <option value="2">David Chen</option>
-          </select>
-        </div> -->
-        <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Submit</button>
-        </form>
-      </fieldset>
+    <div class="col-2 p-0">   
+      <div class="border border-info rounded-sm p-3 bg-white form-wrapper"> 
+        <h4>Add New Employee</h2>      
+        <fieldset>
+          <form action="/employees/add" method="POST" enctype="application/x-www-form-urlencoded">
+            <div class="form-group">
+              <label for="fname_input">First Name</label>
+              <input type="text" class="form-control" name="fname" id="fname_input" placeholder="First name">
+            </div>  
+            
+            <div class="form-group">
+              <label for="lname_input">Last Name</label>
+              <input type="text" class="form-control" name="lname" id="lname_input" placeholder="Last name">
+            </div>    
+            
+            <div class="form-group">
+              <label for="birthday_input">Birthday</label>
+              <input type="date" class="form-control" name="birthday" id="birthday_input" placeholder="Date of birth">
+            </div>            
+
+            <div class="form-group">
+              <label for="department_input">Department</label>
+              <select class="form-control" name="department" id="department_input">
+                <option value="">---Select Department---</option>
+                <% data.departments.forEach((department) => { %>
+                  <option value="<%= department.department_id %>"><%= department.city || "N/A" %> <%= department.dep_name %> Department</option>
+                <% }) %>                  
+              </select>
+            </div>  
+            
+            <div class="form-group">
+              <label for="position_input">Position</label>
+              <select class="form-control" name="position" id="position_input">
+                <option value="">---Select Position---</option>               
+              </select>
+            </div>    
+            
+            <div class="form-group">
+              <label for="salary_input">Monthly Salary($)</label>
+              <input type="number" class="form-control" name="salary" id="salary_input" placeholder="Monthly salary">
+            </div>     
+
+            <div class="form-group">
+              <label for="startdate_input">Start Date</label>
+              <input type="date" class="form-control" name="startdate" id="startdate_input" placeholder="Start date">
+            </div>  
+
+            <div class="form-group">
+              <label for="status_input">Employment Status</label>
+              <select class="form-control" name="status" id="status_input">
+                <option value="">---Select Employment Status---</option>
+                <option value="current">Current employee</option>
+                <option value="previous">Previous employee</option>                
+              </select>                      
+            </div>    
+            
+            <div class="form-group">
+              <label for="manager_input">Manager</label>
+              <select class="form-control" name="manager" id="manager_input">
+                <option value="">---Select Manager---</option>               
+              </select>
+            </div>    
+            
+            <button type="submit" class="btn btn-primary mb-2 center">Submit</button>
+          </form>                        
+        </fieldset>  
+      </div>             
     </div>
-    
-    <div class="col-md-8 pr-5">
-      <h2 align="center" style="padding-top:5px">Employees</h2>
-      <div class="table-wrapper-scroll-y" style="display:block; max-height: 650px; overflow-y: auto; -ms-overflow-style:-ms-autohiding-scrollbar;">
-      <table class="table table-hover">
-      <thead style="width:auto !important;">
-      <tr>
-        <th>#</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>D.O.B.</th>
-        <!-- <th>Branch</th>  -->
-        <th>Department</th> 
-        <th>Position</th>
-        <th>Monthly Salary</th>
-        <th>Start Date</th>
-        <th>Employment Status</th>
-        <th>Manager</th>
-      </tr>
-      </thead>
-        <tbody>
-            <% employee.forEach((employee) => { %>
+
+    <div class="col-10 p-0">
+      <div class="border border-info rounded-sm p-3 bg-white ml-4 mr-5 table-wrapper">
+        <h4>Employees</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>DOB</th>
+              <th>Branch</th> 
+              <th>Department</th> 
+              <th>Position</th>
+              <th>Monthly Salary</th>
+              <th>Start Date</th>
+              <th>Employment Status</th>
+              <th>Manager</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.employee.forEach((employee) => { %>
               <tr>
                 <th scope="row"><%= employee.employee_id %></th>
                 <td><%= employee.fname %></td>
                 <td><%= employee.lname %></td>
                 <td><%= employee.birthday %></td>
-                <!-- <td><%= employee.branch_id %></td> -->
-                <td><%= employee.department_id %></td>
+                <td><%= employee.city %></td>
+                <td><%= employee.dep_name %></td>
                 <td><%= employee.position_id %></td>
                 <td><%= employee.monthly_salary %></td>
                 <td><%= employee.start_date %></td>
                 <td><%= (employee.employment_status) %></td>                 
                 <td><%= employee.manager_id %></td>
-                <td>
-                  <!-- <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Update</button> -->
-                  <!-- <button value="<%= employee.employee_id %>" onclick="updateEmployee(value)">Delete</button> -->
-                  <a href="./employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Update</a>
-                  <!-- <a href="./employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger">Delete</a> -->
-                  <button class="btn btn-sm btn-danger" onclick="deleteEmployee(<%= employee.employee_id %>)">Delete</a>
 
+                <td class="d-flex">                  
+                  <a href="/employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
+                  <a href="/employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
                 </td>
               </tr>
             <% }) %>
-        </tbody>
-      </table>
-
+          </tbody>
+        </table>
       </div>
+      
     </div>
   </div>
 </div>
 
-
 <script>
-// const updateEmployee = function(id) {
-//   let origin = window.location.origin  
-//   let url = origin + "/employees/edit/" + id
-//   window.location.href = url
-// }
-function deleteEmployee(id) {
-  console.log(id)
-}
 
+  // function deleteEmployee(id) {      
+
+  //   axios.post('/employees/delete', {
+  //     id: id      
+  //   })
+  //   .then(function (response) {
+  //     console.log(`employee ${id} deleted`);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
 
 </script>
 

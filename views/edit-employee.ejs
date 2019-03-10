@@ -1,95 +1,98 @@
 <% include partials/header %>
 
-<!-- <div>
-  <button onclick="goHome()">Return to Main Page</a>
-</div> -->
-<!-- <a href="/employees">Home</a> -->
+<div class="container-fluid">
+  <div class="row d-flex flex-row justify-content-center">  
+    <div class="col-6">
+      <div class="border border-info mt-3 p-5 rounded-sm">
+        <h2>Editing information for employee: <%= employee.fname %> <%= employee.lname %></h2>
+        <fieldset>  
+          <form action="" method="POST" enctype="application/x-www-form-urlencoded">
 
-<h2>Updating info for <%= employee.fname %> <%= employee.lname %></h2>
+            <div class="form-group;" style="padding-left:80px; padding-right:57px;">
+              <label for="first-name-input">First Name</label>
+              <input type="text" class="form-control" value="<%= employee.fname %>" name="first-name" id="first-name-input" placeholder="">
+            </div>
+            <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
+              <label for="last-name-input">Last Name</label>
+              <input type="text" class="form-control" value="<%= employee.lname %>" name="last-name" id="last-name-input" placeholder="">
+            </div>
+            <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+              <label for="birthday-input">Birthday</label>
+              <input type="date" class="form-control" value="<%= employee.birthday %>" name="birthday" id="birthday-input" placeholder="">
+            </div> -->
+            <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+              <label for="branch-input">Branch Location</label>
+              <select class="form-control" id="branch-input">
+                <option value="">---Select Branch---</option>          
+                <option value="chicago">Chicago</option>
+                <option value="new york">New York City</option>
+                <option value="seoul">Seoul</option>
+                <option value="taipei">Taipei</option>
+              </select>
+            </div>
+            <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+              <label for="department-input">Department</label>
+              <select class="form-control" id="department-input">
+                <option value="">---Select Department---</option>
+                <option value="accounting">Accounting</option>
+                <option value="engineering">Engineering</option>
+                <option value="resources">Resources</option>
+                <option value="marketing">Marketing</option>
+              </select>
+            </div>
+            <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+              <label for="position-input">Position</label>
+              <select class="form-control" id="position-input">
+                <option value="">---Select Position---</option>
+                <option value="1">Junior Software Developer</option>
+                <option value="2">Sales Assistant</option>
+                <option value="3">Chief Technical Officer</option>
+              </select>
+            </div> -->
+            <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+              <label for="salary-input">Salary ($)</label>
+              <input type="number" value="<%= employee.monthly_salary %>" class="form-control" name="monthly-salary" id="salary-input" placeholder="">
+            </div>
+            <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+              <label for="start-date-input">Start Date</label>
+              <input type="date" class="form-control" name="start-date" id="start-date-input" placeholder="">
+            </div> -->
 
-<fieldset>  
-    <form action="" method="POST" enctype="application/x-www-form-urlencoded">
-
-        <div class="form-group;" style="padding-left:80px; padding-right:57px;">
-          <label for="first-name-input">First Name</label>
-          <input type="text" class="form-control" value="<%= employee.fname %>" name="first-name" id="first-name-input" placeholder="">
-        </div>
-        <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
-          <label for="last-name-input">Last Name</label>
-          <input type="text" class="form-control" value="<%= employee.lname %>" name="last-name" id="last-name-input" placeholder="">
-        </div>
-        <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="birthday-input">Birthday</label>
-          <input type="date" class="form-control" value="<%= employee.birthday %>" name="birthday" id="birthday-input" placeholder="">
-        </div> -->
-        <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="branch-input">Branch Location</label>
-          <select class="form-control" id="branch-input">
-            <option value="">---Select Branch---</option>          
-            <option value="chicago">Chicago</option>
-            <option value="new york">New York City</option>
-            <option value="seoul">Seoul</option>
-            <option value="taipei">Taipei</option>
-          </select>
-        </div>
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="department-input">Department</label>
-          <select class="form-control" id="department-input">
-            <option value="">---Select Department---</option>
-            <option value="accounting">Accounting</option>
-            <option value="engineering">Engineering</option>
-            <option value="resources">Resources</option>
-            <option value="marketing">Marketing</option>
-          </select>
-        </div>
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="position-input">Position</label>
-          <select class="form-control" id="position-input">
-            <option value="">---Select Position---</option>
-            <option value="1">Junior Software Developer</option>
-            <option value="2">Sales Assistant</option>
-            <option value="3">Chief Technical Officer</option>
-          </select>
-        </div> -->
-        <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="salary-input">Salary ($)</label>
-          <input type="number" value="<%= employee.monthly_salary %>" class="form-control" name="monthly-salary" id="salary-input" placeholder="">
-        </div>
-        <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-          <label for="start-date-input">Start Date</label>
-          <input type="date" class="form-control" name="start-date" id="start-date-input" placeholder="">
-        </div> -->
-
-       
-           
-          <input type="hidden" value="<%= employee.employee_id %>" name="employee_id" id="id-input">
-        
           
-        <!-- <div class="form-group;" style="padding-top:10px;padding-left:80px; padding-right:57px;">
-          <label style="padding-right:15px">Employment Status</label>
-          <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value="";>Current</label>
-          <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value= "";>Previous</label>      
-        </div>  -->
-        <!-- <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
-          <label for="manager-input">Manager</label>
-          <select class="form-control" id="manager-input">
-            <option value="">---Select Manager---</option>
-            <option value="1">Ryan Yun</option>
-            <option value="2">David Chen</option>
-          </select>
-        </div> -->
-        <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Update</button>
-        </form>
-</fieldset>
+              
+              <input type="hidden" value="<%= employee.employee_id %>" name="employee_id" id="id-input">
+            
+              
+            <!-- <div class="form-group;" style="padding-top:10px;padding-left:80px; padding-right:57px;">
+              <label style="padding-right:15px">Employment Status</label>
+              <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value="";>Current</label>
+              <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value= "";>Previous</label>      
+            </div>  -->
+            <!-- <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
+              <label for="manager-input">Manager</label>
+              <select class="form-control" id="manager-input">
+                <option value="">---Select Manager---</option>
+                <option value="1">Ryan Yun</option>
+                <option value="2">David Chen</option>
+              </select>
+            </div> -->
+            <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Update</button>
+          </form>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+</div>
 
 <script>
   
-  const goHome = function() {
+  // const goHome = function() {
 
-    console.log('falkj')
-    let homeUrl = window.location.origin
-    window.location.href = homeUrl
-  }
+    
+  //   let homeUrl = window.location.origin
+  //   window.location.href = homeUrl
+  // }
 
   // const sendUpdateRequest = function(e) {    
   //   e.preventDefault();

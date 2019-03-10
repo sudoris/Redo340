@@ -12,22 +12,22 @@ global.db = mysql.pool;
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-// CHANGE THIS %%%
-// const port = process.env.port || 5191;
 app.set('port', process.argv[2] || 5191);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static("./public"));
+// app.use(express.static("./public"));
+app.use(express.static(__dirname + '/public'));
 
-// app.use("/api", require("./routes/api"));
 
 // error handling middleware
 app.use((err, req, res, next) => {
 	res.status(450).send({error: err.message});
 });
 
+
+// main
 app.get("/", (req, res) => {
 	res.render('index');
 });
@@ -35,26 +35,72 @@ app.get("/", (req, res) => {
 app.get("/index", (req, res) => {
 	res.render('index');
 });
-/* --------------------------------------------------------------------------------------- */
-/* ---------------------------------- EMPLOYEES ------------------------------------------ */
-/* --------------------------------------------------------------------------------------- */
+
+// employees 
+
+// load employee page
 app.get("/employees", (req, res) => {
-	let query = `SELECT * FROM employee`;
- 
-	db.query(query, (err, result)=>
-	{
-		if(err)
-		{
+
+  let query = `SELECT employee.*, department.dep_name, branch.city FROM employee             
+               left join department using(department_id)
+               left join branch using(branch_id);` 
+               
+  let data = {}
+  
+  db.query(query, (err, result) => {
+		if (err) {      
 			res.redirect('/');
-		}
-		res.render('employees', {
-		employee:result
-		});
-	}) 
+    }   
+
+    data.employee = result
+    
+    // let query = `SELECT branch_id, city FROM branch;`
+    let query = `SELECT department.department_id, department.dep_name, branch.city FROM department
+                 left join branch using(branch_id);`
+    
+    db.query(query, (err, result) => {
+      if (err) {
+        res.redirect('/');
+      }                
+      
+      data.departments = result   
+      
+      console.log(data)
+  
+      res.render('employees', {
+        data: data
+      });
+    })   		
+  })   
 });
 
-app.get("/employees/edit/:id", (req, res) => {
+// add employee
+app.post("/employees/add", (req, res) => {  
+
+  let fname = req.body.fname
+  let lname = req.body.lname
+  let birthday = req.body.birthday
+  let salary = req.body.salary
+  let start = req.body.startdate
+  let status = req.body.status
+  let department = req.body.department  
   
+  console.log(req)
+
+  let query = "INSERT INTO `employee` (fname, lname, birthday, monthly_salary, start_date, employment_status, department_id) VALUES ('" +
+      fname + "', '" + lname + "', '" + birthday + "', '" + salary + "', '" + start + "', '" + status + "', '" + department + "')"
+
+	
+  db.query(query, (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.redirect('/employees');
+  });  
+});
+
+// load edit employee page
+app.get("/employees/edit/:id", (req, res) => {  
 
   let query = `SELECT * FROM employee WHERE employee_id="${req.params.id}"`
   
@@ -68,42 +114,11 @@ app.get("/employees/edit/:id", (req, res) => {
     
 		res.render('edit-employee', {
 		  employee: result[0]
-		});
-	})  
- 
-	// db.query(query, (err, result)=>
-	// {
-	// 	if(err)
-	// 	{
-	// 		res.redirect('/');
-	// 	}
-	// 	res.render('employees', {
-	// 	employee:result
-	// 	});
-	// }) 
-});
+		})
+	})   	
+})
 
-app.post("/employees", (req, res) => {  
-
-  let fname = req.body["first-name"];
-  let lname = req.body["last-name"];
-  let birthday = req.body.birthday;
-  let monthlySalary = req.body["monthly-salary"];
-  let startDate = req.body["start-date"];
-  let employeeStatus = req.body["employee-stat"];  
-
-  let query = "INSERT INTO `employee` (fname, lname, birthday, monthly_salary, start_date, employment_status) VALUES ('" +
-      fname + "', '" + lname + "', '" + birthday + "', '" + monthlySalary + "', '" + startDate + "', '" + employeeStatus + "')";
-
-	
-  db.query(query, (err, result) => {
-      if (err) {
-          return res.status(500).send(err);
-      }
-      res.redirect('/employees');
-  });  
-});
-
+// update employee data in db and redirect to employee page
 app.post("/employees/edit/:id", (req, res) => {  
   
   let employee_id = req.body.employee_id
@@ -123,23 +138,20 @@ app.post("/employees/edit/:id", (req, res) => {
         });
 });
 
-app.get("/employees/delete/:id", (req, res) => {  
-  
-    
+// delete employee
+app.get("/employees/delete/:id", (req, res) => {      
+
+  let deleteEmployeeQuery = 'DELETE FROM employee WHERE employee_id = "' + req.params.id + '"';
+                    
+  db.query(deleteEmployeeQuery, (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.redirect('/employees');
+  });
+});
         
-      let deleteEmployeeQuery = 'DELETE FROM employee WHERE employee_id = "' + req.params.id + '"';
-                        
-      db.query(deleteEmployeeQuery, (err, result) => {
-          if (err) {
-              return res.status(500).send(err);
-          }
-          res.redirect('/employees');
-      });
-    });
-        
-/* ----------------------------------------------------------------------------------------- */
-/* ---------------------------------- DEPARTMENTS ------------------------------------------ */
-/* ----------------------------------------------------------------------------------------- */
+// departments
 app.get("/departments", (req, res) => {
 	let query = `SELECT * FROM department`;
 
@@ -168,11 +180,9 @@ app.post("/departments", (req, res) => {
 		}
 		res.redirect('/departments');
 	});  
-  });
+});
 
-/* -------------------------------------------------------------------------------------- */
-/* ---------------------------------- BRANCHES ------------------------------------------ */
-/* -------------------------------------------------------------------------------------- */
+// branches
 app.get("/branches", function(req, res){ // BRANCH GET REQUEST
 
 	let query = `SELECT * FROM branch`;
@@ -203,10 +213,9 @@ app.post("/branches", (req, res) => { // BRANCH POST REQUEST
 		}
 		res.redirect('/branches');
 	});  
-  });
-/* --------------------------------------------------------------------------------------- */
-/* ---------------------------------- POSITIONS ------------------------------------------ */
-/* --------------------------------------------------------------------------------------- */
+});
+
+// positions
 app.get("/positions", (req, res) => { // POSITIONS GET REQUEST
 	let query = `SELECT * FROM position`;
 
@@ -236,15 +245,8 @@ app.post("/positions", (req, res) => {   // POSITIONS POST REQUEST
 		}
 		res.redirect('/positions');
 	});  
-  });
+});
 
-/* ---------------------------------------------------------------------------------------- */
-
-// app.listen(port, () => {
-// 	console.log("Server now listening on PORT:" + port);
-// });
-
-// CHANGE THIS @@
 app.listen(app.get('port'), function(){
 console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
