@@ -83,9 +83,7 @@ app.post("/employees/add", (req, res) => {
   let salary = req.body.salary
   let start = req.body.startdate
   let status = req.body.status
-  let department = req.body.department  
-  
-  console.log(req)
+  let department = req.body.department     
 
   let query = "INSERT INTO `employee` (fname, lname, birthday, monthly_salary, start_date, employment_status, department_id) VALUES ('" +
       fname + "', '" + lname + "', '" + birthday + "', '" + salary + "', '" + start + "', '" + status + "', '" + department + "')"
