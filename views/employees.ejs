@@ -61,7 +61,12 @@
             <div class="form-group">
               <label for="manager_input">Manager</label>
               <select class="form-control" name="manager" id="manager_input">
-                <option value="">---Select Manager---</option>               
+                <option value="">---Select Manager---</option>
+                <% data.managers.forEach((manager) => { %>
+                  <% if(<%= manager.fname %> || <%= manager.lname %>){ %>
+                    <option value="<%= manager.employee_id %>"><%= manager.fname %> <%= manager.lname %></option>
+                  <% }                
+                <% }) %>                 
               </select>
             </div>    
             
@@ -105,7 +110,7 @@
                 <td><%= (employee.employment_status) %></td>                 
                 <td>                                      
                   <div class="d-flex flex-row justify-content-between">   
-                    <span class="mr-5"><%= employee.manager_id %></span>  
+                    <span class="mr-5"><%= employee.manager_fname %> <%= employee.manager_lname %></span>  
                     <span>
                       <a href="/employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
                       <a href="/employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>

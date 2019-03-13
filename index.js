@@ -41,35 +41,50 @@ app.get("/index", (req, res) => {
 // load employee page
 app.get("/employees", (req, res) => {
 
-  let query = `SELECT employee.*, department.dep_name, branch.city FROM employee             
-               left join department using(department_id)
-               left join branch using(branch_id);` 
+	// query for all employee data
+	let query = `SELECT e1.*, e2.fname AS manager_fname, e2.lname AS manager_lname, department.dep_name, branch.city FROM employee e1    
+							 left join employee e2 ON e1.manager_id=e2.employee_id
+							 left join department ON e1.department_id=department.department_id
+							 left join branch using(branch_id);` 
                
   let data = {}
-  
+	
+	// send query to get data to populate employee table
   db.query(query, (err, result) => {
 		if (err) {      
 			res.redirect('/');
     }   
 
-    data.employee = result
-    
-    // let query = `SELECT branch_id, city FROM branch;`
+		data.employee = result
+		
+		// query for all departments and branches    
     let query = `SELECT department.department_id, department.dep_name, branch.city FROM department
                  left join branch using(branch_id);`
-    
+		
+		// send query to get data to populate Branch & Department drop down list in Add Employee form
     db.query(query, (err, result) => {
       if (err) {
         res.redirect('/');
       }                
       
-      data.departments = result   
-      
-      console.log(data)
-  
-      res.render('employees', {
-        data: data
-      });
+			data.departments = result   
+			
+			// query for all manangers
+			let query = `SELECT e2.fname, e2.lname, e2.employee_id FROM employee e1    
+									 left join employee e2 ON e1.manager_id=e2.employee_id;`
+			
+			// send query to get data to populate Manager drop down list in Add Employee form
+      db.query(query, (err, result) => {
+				if (err) {
+					res.redirect('/');
+				}                
+				
+				data.managers = result   				
+					
+				res.render('employees', {
+					data: data
+				});
+			})   
     })   		
   })   
 });
