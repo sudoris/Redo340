@@ -9,64 +9,71 @@
           <form action="/employees/add" method="POST" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
               <label for="fname_input">First Name</label>
-              <input type="text" class="form-control" name="fname" id="fname_input" placeholder="First name">
+              <input type="text" class="form-control" name="fname" id="fname_input" placeholder="First name" required>              
             </div>  
             
             <div class="form-group">
               <label for="lname_input">Last Name</label>
-              <input type="text" class="form-control" name="lname" id="lname_input" placeholder="Last name">
+              <input type="text" class="form-control" name="lname" id="lname_input" placeholder="Last name" required>              
             </div>    
             
             <div class="form-group">
               <label for="birthday_input">Birthday</label>
-              <input type="date" class="form-control" name="birthday" id="birthday_input" placeholder="Date of birth">
+              <input type="date" min="0000-01-01" max="9999-12-31" class="form-control" name="birthday" id="birthday_input" placeholder="Date of birth">
             </div>            
 
             <div class="form-group">
               <label for="department_input">Branch & Department</label>
-              <select class="form-control" name="department" id="department_input">
+              <select class="form-control" name="department" id="department_input" required>
                 <option value="">---Select Branch & Department---</option>
                 <% data.departments.forEach((department) => { %>
                   <option value="<%= department.department_id %>"><%= department.city || "N/A" %> <%= department.dep_name %> Department</option>
                 <% }) %>                  
-              </select>
+              </select>              
+            </div>  
+
+            <div class="form-group">
+              <label for="position_input">Title</label>
+              <input type="text" class="form-control" name="position" id="position_input" placeholder="Title" required>              
             </div>  
             
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="position_input">Position</label>
               <select class="form-control" name="position" id="position_input">
                 <option value="">---Select Position---</option>               
               </select>
-            </div>    
+            </div>     -->
             
             <div class="form-group">
               <label for="salary_input">Monthly Salary($)</label>
-              <input type="number" class="form-control" name="salary" id="salary_input" placeholder="Monthly salary">
+              <input type="number" min="1" class="form-control" name="salary" id="salary_input" placeholder="Monthly salary">
             </div>     
 
             <div class="form-group">
               <label for="startdate_input">Start Date</label>
-              <input type="date" class="form-control" name="startdate" id="startdate_input" placeholder="Start date">
+              <input type="date" min="0000-01-01" max="9999-12-31" class="form-control" name="startdate" id="startdate_input" placeholder="Start date" required>
             </div>  
 
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="status_input">Employment Status</label>
-              <select class="form-control" name="status" id="status_input">
+              <select class="form-control" name="status" id="status_input" required>
                 <option value="">---Select Employment Status---</option>
                 <option value="current">Current employee</option>
                 <option value="previous">Previous employee</option>                
               </select>                      
-            </div>    
+            </div>     -->
             
             <div class="form-group">
               <label for="manager_input">Manager</label>
-              <select class="form-control" name="manager" id="manager_input">
+              <select class="form-control" name="manager" id="manager_input" required>
                 <option value="">---Select Manager---</option>
-                <% data.managers.forEach((manager) => { %>
-                  <% if(<%= manager.fname %> || <%= manager.lname %>){ %>
-                    <option value="<%= manager.employee_id %>"><%= manager.fname %> <%= manager.lname %></option>
-                  <% }                
-                <% }) %>                 
+                <% data.managers.forEach((manager) => { %>                 
+                  <% if(manager.fname || manager.lname) { %>                  
+                    <option value="<%= manager.employee_id %>"><%= manager.fname %> <%= manager.lname %></option>                                  
+                  <% } else { %>  
+                    <option value="<%= manager.employee_id %>"><%= manager.employee_id %></option>  
+                  <% } %> 
+                <% }) %>                                 
               </select>
             </div>    
             
@@ -82,32 +89,37 @@
         <table class="table">
           <thead>
             <tr>
-              <th>#</th>
+              <!-- <th>#</th> -->
               <th>First Name</th>
               <th>Last Name</th>
               <th>DOB</th>
               <th>Branch</th> 
               <th>Department</th> 
-              <th>Position</th>
+              <th>Title</th>
+              <th>Certifications</th>
               <th>Monthly Salary</th>
               <th>Start Date</th>
-              <th>Employment Status</th>
+              <!-- <th>Employment Status</th> -->
               <th>Manager</th>
             </tr>
           </thead>
           <tbody>
             <% data.employee.forEach((employee) => { %>
               <tr>
-                <th scope="row"><%= employee.employee_id %></th>
+                <!-- <th scope="row"><%= employee.employee_id %></th> -->
                 <td><%= employee.fname %></td>
                 <td><%= employee.lname %></td>
                 <td><%= employee.birthday %></td>
                 <td><%= employee.city %></td>
                 <td><%= employee.dep_name %></td>
-                <td><%= employee.position_id %></td>
+                <td><%= employee.position %></td>
+                <td>
+
+                  
+                </td>
                 <td><%= employee.monthly_salary %></td>
                 <td><%= employee.start_date %></td>
-                <td><%= (employee.employment_status) %></td>                 
+                <!-- <td><%= (employee.employment_status) %></td>                  -->
                 <td>                                      
                   <div class="d-flex flex-row justify-content-between">   
                     <span class="mr-5"><%= employee.manager_fname %> <%= employee.manager_lname %></span>  

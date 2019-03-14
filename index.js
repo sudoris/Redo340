@@ -70,8 +70,11 @@ app.get("/employees", (req, res) => {
 			data.departments = result   
 			
 			// query for all manangers
-			let query = `SELECT e2.fname, e2.lname, e2.employee_id FROM employee e1    
-									 left join employee e2 ON e1.manager_id=e2.employee_id;`
+			// let query = `SELECT distinct e2.fname, e2.lname, e2.employee_id FROM employee e1    
+			// 						 left join employee e2 ON e1.manager_id=e2.employee_id;`
+
+			let query = `SELECT employee_id, fname, lname FROM employee
+									 WHERE is_manager=1;`
 			
 			// send query to get data to populate Manager drop down list in Add Employee form
       db.query(query, (err, result) => {
@@ -97,11 +100,15 @@ app.post("/employees/add", (req, res) => {
   let birthday = req.body.birthday
   let salary = req.body.salary
   let start = req.body.startdate
-  let status = req.body.status
-  let department = req.body.department     
+	let status = req.body.status
+	let department = req.body.department
+	let manager = req.body.manager   
+	let title = req.body.position
+	
+	
 
-  let query = "INSERT INTO `employee` (fname, lname, birthday, monthly_salary, start_date, employment_status, department_id) VALUES ('" +
-      fname + "', '" + lname + "', '" + birthday + "', '" + salary + "', '" + start + "', '" + status + "', '" + department + "')"
+  let query = "INSERT INTO `employee` (fname, lname, birthday, monthly_salary, start_date, employment_status, department_id, manager_id, position) VALUES ('" +
+      fname + "', '" + lname + "', '" + birthday + "', '" + salary + "', '" + start + "', '" + status + "', '" + department + "', '" + manager + "', '" + title + "')"
 
 	
   db.query(query, (err, result) => {
@@ -228,9 +235,9 @@ app.post("/branches", (req, res) => { // BRANCH POST REQUEST
 	});  
 });
 
-// positions
-app.get("/positions", (req, res) => { // POSITIONS GET REQUEST
-	let query = `SELECT * FROM position`;
+// certifications
+app.get("/certifications", (req, res) => { // CERTIFICATIONS GET REQUEST
+	let query = `SELECT * FROM certification`;
 
 	db.query(query, (err, result)=>
 	{
@@ -238,25 +245,25 @@ app.get("/positions", (req, res) => { // POSITIONS GET REQUEST
 		{
 			res.redirect('/');
 		}
-		res.render('positions', {
-		position:result
+		res.render('certifications', {
+			certifications: result
 		});
 	})
 });
 
-app.post("/positions", (req, res) => {   // POSITIONS POST REQUEST
+app.post("/certifications", (req, res) => {   // CERTS POST REQUEST
 
-	let titleName= req.body["title"]; 
-	let manageStat = req.body["manager-role"];
+	let certName = req.body.certName; 
+	let expDate = req.body.expDate;
   
-	let query = "INSERT INTO `position` (title, managerial_duties) VALUES ('" +
-		titleName + "', '" + manageStat + "')";
+	let query = "INSERT INTO `certification` (cert_name, expires) VALUES ('" +
+		certName + "', '" + expDate + "')";
   
 	db.query(query, (err, result) => {
 		if (err) {
 			return res.status(500).send(err);
 		}
-		res.redirect('/positions');
+		res.redirect('/certifications');
 	});  
 });
 

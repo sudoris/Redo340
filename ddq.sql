@@ -9,13 +9,17 @@ CREATE TABLE `employee` (
   `employee_id` int(11) AUTO_INCREMENT NOT NULL, 
   `fname` varchar(40) NOT NULL,
   `lname` varchar(40) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
+  `position` varchar(75) NOT NULL DEFAULT 'Newbie',
+  -- `birthday` date DEFAULT NULL,
+  `birthday` varchar(10) DEFAULT NULL,
   `department_id` int(11),
   `position_id` int(11),
   `salary_per_month` int(7),
-  `start_date` date DEFAULT NULL,
+  -- `start_date` date DEFAULT NULL,
+  `start_date` varchar(10) DEFAULT NULL,
   `employment_status` varchar(30),
   `manager_id` int(11),
+  `is_manager` boolean,
   PRIMARY KEY (`employee_id`)  
 ) ENGINE=InnoDB;
 
@@ -80,25 +84,81 @@ ALTER TABLE `department`
 ADD FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE SET NULL;
 
 --
--- Table structure for table `position`
+-- Table structure for table `certification`
 --
-DROP TABLE IF EXISTS `position`;
-CREATE TABLE `position` (
-  `position_id` int(11) NOT NULL AUTO_INCREMENT, 
-  `title` varchar(50) NOT NULL,
-  `is_management` boolean,
-  `salary_tier` int(2),
-  PRIMARY KEY (`position_id`)  
+DROP TABLE IF EXISTS `certification`;
+CREATE TABLE `certification` (
+  `certification_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cert_name` varchar(100) NOT NULL,
+  `expires` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`certification_id`)  
 ) ENGINE=InnoDB;
 
 --
--- Dumping data for table `position`
+-- Dumping data for table `certification`
 --
-LOCK TABLES `position` WRITE;
-INSERT INTO `position` (title) VALUES ('Frontend Engineer'), ('Backend Engineer'), ('Chief Executive Officer'), ('Project Manager');
+LOCK TABLES `certification` WRITE;
+INSERT INTO `certification` (cert_name, expires) VALUES ('CPA', '3000-10-21'), ('AWS Solutions Architect', '2222-01-01'), ('Certified Clown', '6666-06-13');
 UNLOCK TABLES;
 
--- Add foreign key to position table in employee table
-ALTER TABLE `employee`
-ADD FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE SET NULL;
+--
+-- Table structure for table `employee_certification`
+--
+DROP TABLE IF EXISTS `employee_certification`;
+CREATE TABLE `employee_certification` (
+  `employee_id` int UNSIGNED NOT NULL,
+  `certification_id` SMALLINT UNSIGNED NOT NULL,
+  PRIMARY KEY pk_employee_certification (`employee_id`, `certification_id`)  
+) ENGINE=InnoDB;
+
+-- NOTES
+--
+-- Dumping data for table `employee_certification`
+--
+
+-- LOCK TABLES `employee_certification` WRITE;
+-- INSERT INTO `employee_certification` (employee_id, certification_id) VALUES (1, 1), (1, 2), (2, 1);
+-- UNLOCK TABLES;
+-- dropping FK constraint: http://www.mysqltutorial.org/mysql-foreign-key/
+
+-- To obtain the generated constraint name of a table, you use the SHOW CREATE TABLE statement as follows:
+-- SHOW CREATE TABLE table_name;
+
+-- ALTER TABLE table_name 
+-- DROP FOREIGN KEY constraint_name;
+
+-- END NOTES
+
+
+
+
+
+
+
+
+
+-- REMOVED TABLE
+--
+-- Table structure for table `position`
+--
+-- DROP TABLE IF EXISTS `position`;
+-- CREATE TABLE `position` (
+--   `position_id` int(11) NOT NULL AUTO_INCREMENT, 
+--   `title` varchar(50) NOT NULL,
+--   `is_management` boolean,
+--   `salary_tier` int(2),
+--   PRIMARY KEY (`position_id`)  
+-- ) ENGINE=InnoDB;
+
+-- --
+-- -- Dumping data for table `position`
+-- --
+-- LOCK TABLES `position` WRITE;
+-- INSERT INTO `position` (title) VALUES ('Frontend Engineer'), ('Backend Engineer'), ('Chief Executive Officer'), ('Project Manager');
+-- UNLOCK TABLES;
+
+-- -- Add foreign key to position table in employee table
+-- ALTER TABLE `employee`
+-- ADD FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE SET NULL;
+
 
