@@ -36,7 +36,7 @@ app.get("/index", (req, res) => {
 	res.render('index');
 });
 
-// employees 
+//---------------------------------------------------------------------- EMPLOYEES ----------------------------------------------------------------------
 
 // load employee page
 app.get("/employees", (req, res) => {
@@ -170,8 +170,10 @@ app.get("/employees/delete/:id", (req, res) => {
       res.redirect('/employees');
   });
 });
-        
-// departments
+
+//---------------------------------------------------------------------- DEPARTMENTS ----------------------------------------------------------------------
+
+// Load department data
 app.get("/departments", (req, res) => {
 	let query = `SELECT * FROM department`;
 
@@ -187,12 +189,14 @@ app.get("/departments", (req, res) => {
 	})
 });
 
-app.post("/departments", (req, res) => {  
+// Add new department
+app.post("/departments", (req, res) => { 
 
-	let deptName= req.body["department-name"]; 
-  
-	let query = "INSERT INTO `department` (name) VALUES ('" +
-		deptName + "')";
+	let deptName= req.body.deptName;
+	let deptBranch = req.body.deptBranch;
+
+	let query = "INSERT INTO `department` (dep_name, branch_id) VALUES  ('" +
+	deptName + "', '" + deptBranch + "')"
   
 	db.query(query, (err, result) => {
 		if (err) {
@@ -202,8 +206,58 @@ app.post("/departments", (req, res) => {
 	});  
 });
 
-// branches
-app.get("/branches", function(req, res){ // BRANCH GET REQUEST
+// Load department edit page
+app.get("/departments/edit/:id", (req,res) => {
+
+	let query = `SELECT * FROM department WHERE department_id= "${req.params.id}"`
+	
+	db.query(query, (err, result)=>
+	{
+		if(err)
+		{
+      console.log('err')
+			res.redirect('/');
+    }
+    
+		res.render('edit-department', {
+		  department: result[0]
+		})
+	})   	
+})
+
+// Update department data in db and redirect to department page
+app.post("/departments/edit/:id", (req, res) => {  
+  
+  let department_id = req.body.department_id
+  let deptName = req.body["deptName"];
+
+
+  let query ="UPDATE `department` SET `dep_name` = '" + deptName + "' WHERE `department`.`department_id` = '" + department_id + "'";
+        db.query(query, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+						}
+            res.redirect('/departments');
+        });
+});
+
+// Delete departments
+app.get("/departments/delete/:id", (req, res) => {      
+
+  let deleteDepartmentQuery = 'DELETE FROM department WHERE department_id = "' + req.params.id + '"';
+                    
+  db.query(deleteDepartmentQuery, (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.redirect('/departments');
+  });
+});
+
+//---------------------------------------------------------------------- BRANCHES ----------------------------------------------------------------------
+
+// Load branch data
+app.get("/branches", function(req, res){ 
 
 	let query = `SELECT * FROM branch`;
 
@@ -219,12 +273,13 @@ app.get("/branches", function(req, res){ // BRANCH GET REQUEST
 	})
 });
 
-app.post("/branches", (req, res) => { // BRANCH POST REQUEST
+// Add branch
+app.post("/branches", (req, res) => { 
 
-	let branchCity= req.body["branch-city"]; 
-	let branchCountry = req.body["branch-country"];
+	let branchCity= req.body.branchCity; 
+	let branchCountry = req.body.branchCountry;
   
-	let query = "INSERT INTO `branch` (city_name, country) VALUES ('" +
+	let query = "INSERT INTO `branch` (city, country) VALUES ('" +
 		branchCity + "', '" + branchCountry + "')";
   
 	db.query(query, (err, result) => {
@@ -235,8 +290,60 @@ app.post("/branches", (req, res) => { // BRANCH POST REQUEST
 	});  
 });
 
-// certifications
-app.get("/certifications", (req, res) => { // CERTIFICATIONS GET REQUEST
+// Load edit branch page
+app.get("/branches/edit/:id", (req, res) => {  
+
+  let query = `SELECT * FROM branch WHERE branch_id="${req.params.id}"`
+  
+  db.query(query, (err, result)=>
+	{
+		if(err)
+		{
+      console.log('err')
+			res.redirect('/');
+    }
+    
+		res.render('edit-branch', {
+		  branch: result[0]
+		})
+	})   	
+})
+
+// Update branch data in db and redirect to branch page
+app.post("/branches/edit/:id", (req, res) => {  
+  
+  let branch_id = req.body.branch_id
+	let branchCity = req.body["branchCity"];
+	let branchCountry = req.body["branchCountry"];
+
+
+  let query = "UPDATE `branch` SET `city` = '" + branchCity + "', `country` = '" + branchCountry + "' WHERE `branch`.`branch_id` = '" + branch_id + "'";
+		 
+					db.query(query, (err, result) => {
+						if (err) {
+                return res.status(500).send(err);
+						}
+						res.redirect('/branches');
+	});
+});
+
+// Delete branch
+app.get("/branches/delete/:id", (req, res) => {      
+
+  let deleteBranchQuery = 'DELETE FROM branch WHERE branch_id = "' + req.params.id + '"';
+                    
+  db.query(deleteBranchQuery, (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.redirect('/branches');
+  });
+});
+
+
+//---------------------------------------------------------------------- CERTIFICATIONS ----------------------------------------------------------------------
+// Load certifications data
+app.get("/certifications", (req, res) => { 
 	let query = `SELECT * FROM certification`;
 
 	db.query(query, (err, result)=>
@@ -251,7 +358,8 @@ app.get("/certifications", (req, res) => { // CERTIFICATIONS GET REQUEST
 	})
 });
 
-app.post("/certifications", (req, res) => {   // CERTS POST REQUEST
+// Add new certifications
+app.post("/certifications", (req, res) => {
 
 	let certName = req.body.certName; 
 	let expDate = req.body.expDate;
@@ -267,6 +375,58 @@ app.post("/certifications", (req, res) => {   // CERTS POST REQUEST
 	});  
 });
 
+// Load certifications edit page
+app.get("/certifications/edit/:id", (req,res) => {
+
+	let query = `SELECT * FROM certification WHERE certification_id= "${req.params.id}"`
+	
+	db.query(query, (err, result)=>
+	{
+		if(err)
+		{
+      console.log('err')
+			res.redirect('/');
+    }
+    
+		res.render('edit-certification', {
+		  certification: result[0]
+		})
+	})   	
+})
+
+// Update certification data in db and redirect to certficiation page
+app.post("/certifications/edit/:id", (req, res) => {  
+  
+  let certification_id = req.body.certification_id
+	let certificationName = req.body["certName"];
+	let certificationExpr = req.body["certExpire"];
+
+
+	let query = "UPDATE `certification` SET `cert_name` = '" + certificationName + "', `expires` = '" + certificationExpr + "' WHERE `certification`.`certification_id` = '" + certification_id + "'";
+		 
+	db.query(query, (err, result) => {
+		if (err) {
+				return res.status(500).send(err);
+		}
+		res.redirect('/certifications');
+});
+});
+
+// Delete certifications
+app.get("/certifications/delete/:id", (req, res) => {      
+
+  let deleteCertificationQuery = 'DELETE FROM certification WHERE certification_id = "' + req.params.id + '"';
+                    
+  db.query(deleteCertificationQuery, (err, result) => {
+      if (err) {
+          return res.status(500).send(err);
+      }
+      res.redirect('/certifications');
+  });
+});
+
+
 app.listen(app.get('port'), function(){
 console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
+
