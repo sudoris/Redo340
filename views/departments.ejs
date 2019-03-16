@@ -13,16 +13,16 @@
 			<form action="" method="POST" enctype="application/x-www-form-urlencoded">
 			 <div class="form-group;" style="padding-left:80px; padding-right:57px;">
 				<label for="department-name-input">Name of Department:</label>
-				<input type="text" class="form-control" id="department-name-input" name="department-name" placeholder="">
+				<input type="text" class="form-control" id="department-name-input" name="deptName" placeholder="">
 			 </div>
 			<!--  <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
 				<label for="department-head-input">Department Head Employee ID#</label>
 				<input type="text" class="form-control" id="department-head-input" placeholder="">
 			 </div> -->
-			 <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
 				<label for="branch-input">Branch ID#</label>
-				<input type="number" class="form-control" id="branch-input" placeholder="">
-			 </div> -->
+				<input type="number" class="form-control" id="department-branch-input" name="deptBranch" placeholder="">
+			 </div>
 			 <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Submit</button>
 			</form>
 		</fieldset>
@@ -36,16 +36,25 @@
 	<tr>
 	  <th>ID #</th>
 	  <th>Department Name</th>
-<!-- 	  <th>Head of Department</th>
-	  <th>Branch ID#</th> -->
+	  <th>Branch ID #</th>
+	<!--<th>Head of Department</th> -->
 	</tr>
 	</thead>
 	<tbody>
 		<% department.forEach((department, index) => { %>
 			<tr>
-				<th scope="row"><%= department.id %></th>
-				<td><%= department.name%></td>
-				<!-- <td><%= department.employee_count %></td> -->
+				<th scope="row"><%= department.department_id %></th>
+				<td><%= department.dep_name%></td>
+				<td>                                      
+					<div class="d-flex flex-row justify-content-between"> 
+					<span class="mr-5"><%= department.branch_id %></span>  
+					<span>  
+					  <span>
+						<a href="/departments/edit/<%= department.department_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
+						<a href="/departments/delete/<%= department.department_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
+					  </span>            
+					</div>      
+				  </td>
 			</tr>
 		<% }) %>
 	</table>
