@@ -2,17 +2,20 @@
 
 <div class="container-fluid">
   <div class="row d-flex flex-row justify-content-center">  
-    <div class="col-6">
+    <div class="col-8">
       <div class="border border-info mt-3 p-5 rounded-sm">
-        <h2>Editing information for employee: <%= employee.fname %> <%= employee.lname %></h2>
+        <h2>Editing information for employee: <%= `${employee.fname} ${employee.lname}` %></h2>
+        <div class="col-6 mx-auto">
         <fieldset>  
           <form action="" method="POST" enctype="application/x-www-form-urlencoded">
+            
 
-            <div class="form-group;" style="padding-left:80px; padding-right:57px;">
+            
+            <div class="form-group">
               <label for="first-name-input">First Name</label>
               <input type="text" class="form-control" value="<%= employee.fname %>" name="first-name" id="first-name-input" placeholder="">
             </div>
-            <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
+            <div class="form-group">
               <label for="last-name-input">Last Name</label>
               <input type="text" class="form-control" value="<%= employee.lname %>" name="last-name" id="last-name-input" placeholder="">
             </div>
@@ -49,7 +52,7 @@
                 <option value="3">Chief Technical Officer</option>
               </select>
             </div> -->
-            <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
+            <div class="form-group" >
               <label for="salary-input">Salary ($)</label>
               <input type="number" value="<%= employee.monthly_salary %>" class="form-control" name="monthly-salary" id="salary-input" placeholder="">
             </div>
@@ -76,9 +79,13 @@
                 <option value="2">David Chen</option>
               </select>
             </div> -->
-            <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Update</button>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            
           </form>
         </fieldset>
+      </div>
       </div>
     </div>
   </div>

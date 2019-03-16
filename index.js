@@ -65,7 +65,17 @@ app.get("/employees", (req, res) => {
     db.query(query, (err, result) => {
       if (err) {
         res.redirect('/');
-      }                
+      }                         
+
+      result.sort((a, b) => {
+        if(a.city < b.city) { 
+          return -1
+        } else if (a.city > b.city) { 
+          return 1 
+        } else {
+          return 0
+        }        
+      })
       
 			data.departments = result   
 			
@@ -132,6 +142,8 @@ app.get("/employees/edit/:id", (req, res) => {
 			res.redirect('/');
     }
     
+    console.log(result[0])
+
 		res.render('edit-employee', {
 		  employee: result[0]
 		})
@@ -182,7 +194,7 @@ app.get("/departments", (req, res) => {
 			res.redirect('/');
 		}
 		res.render('departments', {
-		department:result
+		  department: result
 		});
 	})
 });

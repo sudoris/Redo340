@@ -2,3 +2,7 @@
   max-height: 99%;
   overflow: auto;
 } */
+.table-wrapper {
+  overflow: auto;
+  max-height: 60%;
+}

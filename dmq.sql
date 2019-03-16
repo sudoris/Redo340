@@ -10,3 +10,7 @@ left join employee e2 ON e1.manager_id=e2.employee_id
 left join department ON e1.department_id=department.department_id
 left join branch using(branch_id);
 
+SELECT e_c.employee_id, c.cert_name, e.fname FROM employee_certification as e_c
+LEFT JOIN employee as e ON e_c.employee_id=e.employee_id
+LEFT JOIN certification as c ON e_c.certification_id=c.certification_id;
+
