@@ -9,13 +9,17 @@ app.set('mysql', mysql);
 global.db = mysql.pool;
 
 // set 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 app.set('port', process.argv[2] || 5191);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// app.use(express.static("./public"));
+app.use(express.static(__dirname + '/public'));
+
 
 // error handling middleware
 app.use((err, req, res, next) => {
@@ -33,7 +37,6 @@ app.get("/index", (req, res) => {
 });
 
 //---------------------------------------------------------------------- EMPLOYEES ----------------------------------------------------------------------
-
 // load employee page
 app.get("/employees", (req, res) => {
 
@@ -285,7 +288,10 @@ app.get("/employees/delete/:id", (req, res) => {
 
 // Load department data
 app.get("/departments", (req, res) => {
-	let query = `SELECT * FROM department`;
+
+	let query = `SELECT department.dep_name, branch.city, branch.country FROM department INNER JOIN branch ON department.branch_id = branch.branch_id`;
+
+	let data = {};
 
 	db.query(query, (err, result)=>
 	{
@@ -293,10 +299,23 @@ app.get("/departments", (req, res) => {
 		{
 			res.redirect('/');
 		}
+
+		data.department = result
+
+		let query = `SELECT branch.branch_id, branch.city, branch.country FROM branch;`
+		
+		db.query(query, (err, result) => {
+      if (err) {
+        res.redirect('/');
+      }   
+		
+			data.branch = result;
+
 		res.render('departments', {
-		  department: result
+		data: data
 		});
 	})
+	});
 });
 
 // Add new department
@@ -508,11 +527,10 @@ app.get("/certifications/edit/:id", (req,res) => {
 app.post("/certifications/edit/:id", (req, res) => {  
   
   let certification_id = req.body.certification_id
-	let certificationName = req.body["certName"];
 	let certificationExpr = req.body["certExpire"];
 
 
-	let query = "UPDATE `certification` SET `cert_name` = '" + certificationName + "', `expires` = '" + certificationExpr + "' WHERE `certification`.`certification_id` = '" + certification_id + "'";
+	let query = "UPDATE `certification` SET `expires` = '" + certificationExpr + "' WHERE `certification`.`certification_id` = '" + certification_id + "'";
 		 
 	db.query(query, (err, result) => {
 		if (err) {
@@ -521,20 +539,6 @@ app.post("/certifications/edit/:id", (req, res) => {
 		res.redirect('/certifications');
 });
 });
-
-// Delete certifications
-app.get("/certifications/delete/:id", (req, res) => {      
-
-  let deleteCertificationQuery = 'DELETE FROM certification WHERE certification_id = "' + req.params.id + '"';
-                    
-  db.query(deleteCertificationQuery, (err, result) => {
-      if (err) {
-          return res.status(500).send(err);
-      }
-      res.redirect('/certifications');
-  });
-});
-
 
 app.listen(app.get('port'), function(){
 console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
