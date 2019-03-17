@@ -4,5 +4,6 @@
 } */
 .table-wrapper {
   overflow: auto;
-  max-height: 60%;
+  min-height: 50%;
+  max-height: 55%;
 }

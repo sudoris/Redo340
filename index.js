@@ -9,17 +9,13 @@ app.set('mysql', mysql);
 global.db = mysql.pool;
 
 // set 
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 app.set('port', process.argv[2] || 5191);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// app.use(express.static("./public"));
-app.use(express.static(__dirname + '/public'));
-
 
 // error handling middleware
 app.use((err, req, res, next) => {
@@ -55,7 +51,7 @@ app.get("/employees", (req, res) => {
 			res.redirect('/');
     }   
 
-		data.employee = result
+		data.employees = result
 		
 		// query for all departments and branches    
     let query = `SELECT department.department_id, department.dep_name, branch.city FROM department
@@ -129,24 +125,119 @@ app.post("/employees/add", (req, res) => {
   });  
 });
 
+// load find-employee page
+app.get("/employees/find", (req, res) => {
+  
+  let searchedName = req.query.searchVal
+
+	// query for all employees whose first name = searchedName
+	let query = `SELECT *
+               FROM 
+               (
+                 SELECT e1.*, e2.fname AS manager_fname, e2.lname AS manager_lname, department.dep_name, branch.city 
+                 FROM employee e1    
+                 left join employee e2 ON e1.manager_id=e2.employee_id
+                 left join department ON e1.department_id=department.department_id
+                 left join branch ON branch.branch_id=department.branch_id
+               ) as e 
+               WHERE e.fname="${searchedName}";` 
+               
+  let data = {}
+
+  data.searchVal = searchedName
+	
+	// send query to get data to populate employees with first name = searchedName table
+  db.query(query, (err, result) => {
+		if (err) {    
+      
+      console.log(err)
+      
+			// res.render('find-employee', {
+      //   data: data
+      // })  
+    }   
+
+    data.employees = result		
+
+    console.log(data)
+
+    res.render('find-employee', {
+		  data: data
+		})    	 		
+  })   
+});
+
 // load edit employee page
 app.get("/employees/edit/:id", (req, res) => {  
 
-  let query = `SELECT * FROM employee WHERE employee_id="${req.params.id}"`
+  let query = `SELECT *
+              FROM 
+              (
+                SELECT e1.*, e2.fname AS manager_fname, e2.lname AS manager_lname, department.dep_name, branch.city 
+                FROM employee e1    
+                left join employee e2 ON e1.manager_id=e2.employee_id
+                left join department ON e1.department_id=department.department_id
+                left join branch ON branch.branch_id=department.branch_id
+              ) as e 
+              WHERE e.employee_id=${req.params.id};`
+
+               
   
+  let data = {}
+
   db.query(query, (err, result)=>
 	{
 		if(err)
 		{
       console.log('err')
 			res.redirect('/');
-    }
-    
-    console.log(result[0])
+    }    
 
-		res.render('edit-employee', {
-		  employee: result[0]
-		})
+    data.employee = result[0]
+    
+    let query = `SELECT department.department_id, department.dep_name, branch.city FROM department
+                 left join branch using(branch_id);`
+    
+    // send query to get data to populate Branch & Department drop down list in Add Employee form
+    db.query(query, (err, result) => {
+      if (err) {
+        res.redirect('/');
+      }                         
+
+      result.sort((a, b) => {
+        if(a.city < b.city) { 
+          return -1
+        } else if (a.city > b.city) { 
+          return 1 
+        } else {
+          return 0
+        }        
+      })
+      
+			data.departments = result   
+			
+			// query for all manangers
+			// let query = `SELECT distinct e2.fname, e2.lname, e2.employee_id FROM employee e1    
+			// 						 left join employee e2 ON e1.manager_id=e2.employee_id;`
+
+			let query = `SELECT employee_id, fname, lname FROM employee
+									 WHERE is_manager=1;`
+			
+			// send query to get data to populate Manager drop down list in Add Employee form
+      db.query(query, (err, result) => {
+				if (err) {
+					res.redirect('/');
+				}                
+				
+				data.managers = result   				
+        
+        console.log(data)
+
+				res.render('edit-employee', {
+					data: data
+				});
+      })		
+    })
 	})   	
 })
 
@@ -158,12 +249,19 @@ app.post("/employees/edit/:id", (req, res) => {
   let lname = req.body["last-name"];
   // let birthday = req.body.birthday;
   let monthlySalary = req.body["monthly-salary"];
+  let department = req.body.department
+  let position = req.body.position
+  let mgr = req.body.manager
+
+  if (mgr === 'null') {
+    mgr = null
+  }
   // let startDate = req.body["start-date"];
   // let employeeStatus = req.body["employee-stat"];  
 
-  let query = "UPDATE `employee` SET `fname` = '" + fname + "', `lname` = '" + lname + "', `monthly_salary` = '" + monthlySalary + "' WHERE `employee`.`employee_id` = '" + employee_id + "'";
+  let query = "UPDATE `employee` SET `fname` = '" + fname + "', `lname` = '" + lname + "', `monthly_salary` = '" + monthlySalary + "', `department_id` = '" + department + "', `position` = '" + position + "', `manager_id` = " + mgr + " WHERE `employee`.`employee_id` = '" + employee_id + "'";
         db.query(query, (err, result) => {
-            if (err) {
+            if (err) { 
                 return res.status(500).send(err);
             }
             res.redirect('/employees');

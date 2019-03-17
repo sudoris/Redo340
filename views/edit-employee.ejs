@@ -4,81 +4,62 @@
   <div class="row d-flex flex-row justify-content-center">  
     <div class="col-8">
       <div class="border border-info mt-3 p-5 rounded-sm">
-        <h2>Editing information for employee: <%= `${employee.fname} ${employee.lname}` %></h2>
+        <h2>Editing information for employee: <%= `${data.employee.fname} ${data.employee.lname}` %></h2>
         <div class="col-6 mx-auto">
         <fieldset>  
-          <form action="" method="POST" enctype="application/x-www-form-urlencoded">
-            
-
+          <form action="" method="POST" enctype="application/x-www-form-urlencoded">         
             
             <div class="form-group">
               <label for="first-name-input">First Name</label>
-              <input type="text" class="form-control" value="<%= employee.fname %>" name="first-name" id="first-name-input" placeholder="">
+              <input type="text" class="form-control" value="<%= data.employee.fname %>" name="first-name" id="first-name-input" placeholder="">
             </div>
             <div class="form-group">
               <label for="last-name-input">Last Name</label>
-              <input type="text" class="form-control" value="<%= employee.lname %>" name="last-name" id="last-name-input" placeholder="">
-            </div>
-            <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-              <label for="birthday-input">Birthday</label>
-              <input type="date" class="form-control" value="<%= employee.birthday %>" name="birthday" id="birthday-input" placeholder="">
-            </div> -->
-            <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-              <label for="branch-input">Branch Location</label>
-              <select class="form-control" id="branch-input">
-                <option value="">---Select Branch---</option>          
-                <option value="chicago">Chicago</option>
-                <option value="new york">New York City</option>
-                <option value="seoul">Seoul</option>
-                <option value="taipei">Taipei</option>
-              </select>
-            </div>
-            <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-              <label for="department-input">Department</label>
-              <select class="form-control" id="department-input">
-                <option value="">---Select Department---</option>
-                <option value="accounting">Accounting</option>
-                <option value="engineering">Engineering</option>
-                <option value="resources">Resources</option>
-                <option value="marketing">Marketing</option>
-              </select>
-            </div>
-            <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-              <label for="position-input">Position</label>
-              <select class="form-control" id="position-input">
-                <option value="">---Select Position---</option>
-                <option value="1">Junior Software Developer</option>
-                <option value="2">Sales Assistant</option>
-                <option value="3">Chief Technical Officer</option>
-              </select>
-            </div> -->
-            <div class="form-group" >
-              <label for="salary-input">Salary ($)</label>
-              <input type="number" value="<%= employee.monthly_salary %>" class="form-control" name="monthly-salary" id="salary-input" placeholder="">
-            </div>
-            <!-- <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-              <label for="start-date-input">Start Date</label>
-              <input type="date" class="form-control" name="start-date" id="start-date-input" placeholder="">
-            </div> -->
+              <input type="text" class="form-control" value="<%= data.employee.lname %>" name="last-name" id="last-name-input" placeholder="">
+            </div>        
 
-          
-              
-              <input type="hidden" value="<%= employee.employee_id %>" name="employee_id" id="id-input">
+            <div class="form-group">
+              <label for="position_input">Title</label>
+              <input type="text" maxlength="50" value="<%= data.employee.position %>" class="form-control" name="position" id="position_input" placeholder="Title">              
+            </div>  
             
-              
-            <!-- <div class="form-group;" style="padding-top:10px;padding-left:80px; padding-right:57px;">
-              <label style="padding-right:15px">Employment Status</label>
-              <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value="";>Current</label>
-              <label class="radio-inline"><input type="radio" name="employee-stat" id="employment-status-input" value= "";>Previous</label>      
-            </div>  -->
-            <!-- <div class="form-group;" style=" padding-left:80px; padding-right:57px;">
-              <label for="manager-input">Manager</label>
-              <select class="form-control" id="manager-input">
-                <option value="">---Select Manager---</option>
-                <option value="1">Ryan Yun</option>
-                <option value="2">David Chen</option>
+            <div class="form-group">
+              <label for="department_input">Branch & Department</label>
+              <select class="form-control" name="department" id="department_input">
+
+                <option value="<%= data.employee.department_id %>"><%= data.employee.city + ' ' + data.employee.dep_name %></option>
+                <option value="" class="bg-info text-white" disabled>---Select Branch & Department---</option>
+                <% data.departments.forEach((department) => { %>
+                  <option value="<%= department.department_id %>"><%= department.city || "N/A" %> <%= department.dep_name %> Department</option>
+                <% }) %>                  
+              </select>              
+            </div>  
+
+            <div class="form-group">
+              <label for="manager_input">Manager</label>
+              <select class="form-control" name="manager" id="manager_input">
+                <% if(data.employee.manager_id && data.employee.manager_fname || data.employee.manager_lname) { %>                  
+                  <option value="<%= data.employee.manager_id %>"><%= data.employee.manager_fname + ' ' + data.employee.manager_lname %></option>
+                <% } else { %> 
+                  <option value="">No manager assigned</option>
+                <% } %>  
+                <option value="" disabled class="bg-info text-white">---Select Manager---</option>
+                <option value="null">None</option>
+                <% data.managers.forEach((manager) => { %>                 
+                  <% if(manager.fname || manager.lname) { %>                  
+                    <option value="<%= manager.employee_id %>"><%= manager.fname %> <%= manager.lname %></option>                                  
+                  <% } %>                      
+                <% }) %>                                 
               </select>
-            </div> -->
+            </div> 
+            
+            <div class="form-group">
+              <label for="salary-input">Salary ($)</label>
+              <input type="number" value="<%= data.employee.monthly_salary %>" class="form-control" name="monthly-salary" id="salary-input" placeholder="">
+            </div>                    
+              
+            <input type="hidden" value="<%= data.employee.employee_id %>" name="employee_id" id="id-input">
+                                      
             <div class="text-center">
               <button type="submit" class="btn btn-primary">Update</button>
             </div>

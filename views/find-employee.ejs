@@ -1,0 +1,84 @@
+<% include partials/header %>
+
+<div class="container-fluid mt-2 mx-4">
+  <div class="row">    
+    <div class="col-12 p-0 mx-auto">
+      <div class="border border-info rounded-sm p-3 bg-white ml-4 mr-5 overflow-auto">
+        <div class="d-flex justify-content-between mb-2">
+          <h4>Employees with first name of: <%= data.searchVal %></h4>
+          <!-- Search form -->
+          <fieldset>
+            <form action="/employees/find/" method="GET" class="form-inline" id='search-form' enctype="application/x-www-form-urlencoded">
+              <input type="text" name="searchVal" id="search-input" class='form-control' value="" minlength='1' pattern='[A-Za-z]+?' placeholder="Search by first name...">
+              <button class="btn btn-secondary" type="button" id="search-button"><i class="fas fa-search"></i></button>
+            </form>  
+          </fieldset>
+        </div>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <!-- <th>#</th> -->
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>DOB</th>
+              <th>Branch</th> 
+              <th>Department</th> 
+              <th>Title</th>
+              <th>Certifications</th>
+              <th>Monthly Salary</th>
+              <th>Start Date</th>              
+              <th>Manager</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.employees.forEach((employee) => { %>
+              <tr>                
+                <td><%= employee.fname %></td>
+                <td><%= employee.lname %></td>
+                <td><%= employee.birthday %></td>
+                <td><%= employee.city %></td>
+                <td><%= employee.dep_name %></td>
+                <td><%= employee.position %></td>
+                <td>
+
+                  
+                </td>
+                <td><%= employee.monthly_salary %></td>
+                <td><%= employee.start_date %></td>                
+                <td>                                      
+                  <!-- <div class="d-flex flex-row justify-content-between">    -->
+                    <span class="mr-5"><%= employee.manager_fname %> <%= employee.manager_lname %></span>  
+                    <!-- <span>
+                      <a href="/employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
+                      <a href="/employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
+                    </span>             -->
+                  <!-- </div>       -->
+                </td>
+                <td>
+                  <span class="d-flex flex-row">
+                    <a href="/employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
+                    <a href="/employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
+                  </span>    
+                </td>
+
+                <!-- <td class="d-flex">                  
+                  <a href="/employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
+                  <a href="/employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
+                </td> -->
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<% include partials/footer %>
