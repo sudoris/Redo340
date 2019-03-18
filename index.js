@@ -88,11 +88,26 @@ app.get("/employees", (req, res) => {
 					res.redirect('/');
 				}                
 				
-				data.managers = result   				
-					
-				res.render('employees', {
-					data: data
-				});
+        data.managers = result   
+        
+        // query for employee_certification list
+        let query = `SELECT e_c.employee_id, c.cert_name, e.fname FROM employee_certification as e_c
+                    LEFT JOIN employee as e ON e_c.employee_id=e.employee_id
+                    LEFT JOIN certification as c ON e_c.certification_id=c.certification_id;`
+
+        db.query(query, (err, result) => {
+          if (err) {
+            res.redirect('/');
+          }                
+          
+          data.certifications = result   	
+          
+          console.log(data)
+            
+          res.render('employees', {
+            data: data
+          });
+        })   						
 			})   
     })   		
   })   
