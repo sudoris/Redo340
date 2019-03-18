@@ -14,54 +14,78 @@
     <!-- Custom CSS -->
     <!-- <link href="./public/styles.css" rel="stylesheet"> -->
     <style>
-      .card {
-        width: 18rem;
+      .btn {
+        background-color: white;
+        height: 19rem;
+        width: 19rem;
+        margin: 0 auto;
+        display: table;
+        margin-right: 0px;
+        margin-top: 22px;
+        border-color: #22A58D;
+      }
+      
+      .btn-content {
+        font-size: 20px;
+        color:#333232;
+        padding-top: 52px;
       }
 
-      .card a {
-        font-size: 2rem;
+      a:hover, a:focus {
+      text-decoration: none;
       }
+
+
+
     </style>
     
   </head>
 
   <body class="bg-light">
 
-    <div class="col-12 text-center mt-5 bg-dark text-light py-3">
+    <div class="col-12 text-center bg-dark text-light py-3">
       <h1>Company Database</h1>
     </div> 
 
     <div class="container-fluid">              
       <div class="row">
-        <div class="d-flex flex-row col-8 mx-auto mt-5 text-center">   
-
-          <div class="card">
-            <div class="card-body">
-              <div><i class="fas fa-users fa-5x"></i></div>
-              <div><a href="/employees">Employees</a></div>
+        <div class="d-flex flex-row col-7 mx-auto mt-5 text-center">   
+          
+          <a href="/employees">
+            <div class="btn btn-primary">
+              <div class = "btn-content">
+                <div><i class="fas fa-users fa-4x"></i></div>
+                <h2>Employees</h2>
+              </div>
             </div>
-          </div>
+          </a>
 
-          <div class="card">
-            <div class="card-body">
-              <div><i class="fas fa-stream fa-5x"></i></div>
-              <div><a href="/departments">Departments</a></div>
+          <a href="/departments">
+            <div class="btn btn-primary">
+                <div class = "btn-content">
+                  <div><i class="fas fa-stream fa-4x"></i></div>
+                  <h2>Departments</h2>
+                </div>
             </div>
-          </div>
+          </a>
 
-          <div class="card">
-            <div class="card-body">
-              <div><i class="fas fa-glasses fa-5x"></i></div>
-              <div><a href="/certifications">Certifications</a></div>
+          <a href="/certifications">
+            <div class="btn btn-primary">
+                <div class = "btn-content">
+                  <div><i class="fas fa-glasses fa-4x"></i></div>
+                  <h2>Certifications</h2>
+                </div>
             </div>
-          </div>
+          </a>
 
-          <div class="card">
-            <div class="card-body">
-              <div><i class="far fa-building fa-5x"></i></div>
-              <div><a href="/branches">Branches</a></div>
+          <a href="/branches">
+            <div class="btn btn-primary">
+                <div class = "btn-content">
+                  <div><i class="far fa-building fa-4x"></i></div>
+                  <h2>Branches</h2>
+                </div>
             </div>
-          </div>
+          </a>
 
         </div>      
       </div>    

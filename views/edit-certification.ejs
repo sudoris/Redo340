@@ -4,19 +4,19 @@
         <div class="row d-flex flex-row justify-content-center">  
                 <div class="col-6">
                     <div class="border border-info mt-3 p-5 rounded-sm">
-                        <h2>Editing information for Certifciation: <%=certification.cert_name %></h2>
+                        <h2>Editing information for Certification: <%=certification.cert_name %></h2>
                             <fieldset>  
                                 <form action="" method="POST" enctype="application/x-www-form-urlencoded">
                                 <div class="form-group;" style="padding-left:80px; padding-right:57px;">
                                     <label for="title-input">Certification Name:</label>
-                                    <input type="text" class="form-control" id="certificate-input" name="certName" value = "<%= certification.cert_name %>" placeholder="">
+                                    <input type="text" class="form-control" id="certificate-input" name="certName" value = "<%= certification.cert_name %>" placeholder="" readonly>
                                 </div>
                                 <div class="form-group;" style="padding-left:80px; padding-right:57px;">
                                     <label for="title-input">Expiration Date:</label>
                                     <input type="text" class="form-control" id="expiration-input" name="certExpire" value = "<%= certification.expires %>" placeholder="">
                                 </div>
                                 <input type="hidden" value="<%= certification.certification_id %>" name="certification_id" id="id-input">
-                                <button type="submit" class="btn btn-primary mt-2" style="position:relative; left:220px; width: 175px;"> Update </button>
+                                <button type="submit" class="btn btn-primary mt-2" style="display: block; margin: 0 auto; width:200px;"> Update </button>
                                 </form>
                             </fieldset>
                     </div>

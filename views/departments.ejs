@@ -8,57 +8,59 @@
 
 <div class="modal-body;">
 	<div class="col-md-4" style="width:50%; float:left">
+		<div class="border border-info rounded-sm p-3 bg-white form-wrapper"> 
 		<h2 align="center" style="padding-top:5px; padding-bottom:-15px">Add new department</h2>
 		<fieldset>  
 			<form action="" method="POST" enctype="application/x-www-form-urlencoded">
 			 <div class="form-group;" style="padding-left:80px; padding-right:57px;">
 				<label for="department-name-input">Name of Department:</label>
 				<input type="text" class="form-control" id="department-name-input" name="deptName" placeholder="">
-			 </div>
+			
 			<!--  <div class="form-group;" style="padding-top:5px;padding-left:80px; padding-right:57px;">
 				<label for="department-head-input">Department Head Employee ID#</label>
 				<input type="text" class="form-control" id="department-head-input" placeholder="">
 			 </div> -->
-			 <div class="form-group;" style="padding-top:5px; padding-left:80px; padding-right:57px;">
-				<label for="branch-input">Branch ID#</label>
-				<input type="number" class="form-control" id="department-branch-input" name="deptBranch" placeholder="">
-			 </div>
+			 <div class="form-group">
+					<label for="department_input">Branch</label>
+					<select class="form-control" name="deptBranch" id="branch_input" required>
+						<option value="">---Select Branch Location---</option>
+						<% data.branch.forEach((branch) => { %>
+							<option value="<%= branch.branch_id %>"><%= branch.city || "N/A" %> - <%= branch.country %></option>
+						<% }) %>                  
+					</select>              
+				</div>  
+				</div>
 			 <button type="submit" class="btn btn-primary mt-3" style="position:relative; left:220px; width: 175px;">Submit</button>
 			</form>
 		</fieldset>
 	</div>
+</div>
 	
 	<div class="col-md-8" style="width:80%; float:right;">
+	<div class="border border-info rounded-sm p-3 bg-white form-wrapper"> 
 	<h2 align="center" style="padding-top:5px">Departments</h2>
 	<div class="table-wrapper-scroll-y" style="display:block; max-height: 650px; overflow-y: auto; -ms-overflow-style:-ms-autohiding-scrollbar;">
 	<table class="table table-hover">
 	<thead style="width:auto !important;">
 	<tr>
-	  <th>ID #</th>
 	  <th>Department Name</th>
-	  <th>Branch ID #</th>
-	<!--<th>Head of Department</th> -->
+	  <th>Branch Location</th>
 	</tr>
 	</thead>
 	<tbody>
-		<% department.forEach((department, index) => { %>
+		<% data.department.forEach((department, index) => { %>
 			<tr>
-				<th scope="row"><%= department.department_id %></th>
 				<td><%= department.dep_name%></td>
 				<td>                                      
 					<div class="d-flex flex-row justify-content-between"> 
-					<span class="mr-5"><%= department.branch_id %></span>  
-					<span>  
-					  <span>
-						<a href="/departments/edit/<%= department.department_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
-						<a href="/departments/delete/<%= department.department_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
-					  </span>            
+					<span class="mr-5"><%= department.city %> - <%= department.country %></span>            
 					</div>      
-				  </td>
+				</td>
 			</tr>
 		<% }) %>
 	</table>
 	</div>
+</div>
 </div>
 </div>
 
