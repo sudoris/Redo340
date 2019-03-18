@@ -105,7 +105,7 @@ app.get("/employees", (req, res) => {
           
           data.certifications = result   	
           
-          console.log(data)
+          
             
           res.render('employees', {
             data: data
@@ -249,11 +249,51 @@ app.get("/employees/edit/:id", (req, res) => {
 				
 				data.managers = result   				
         
-        console.log(data)
+        
 
-				res.render('edit-employee', {
-					data: data
-				});
+				// let query = `SELECT e_c.employee_id, c.cert_name, e.fname FROM employee_certification as e_c
+        //             LEFT JOIN employee as e ON e_c.employee_id=e.employee_id
+        //             LEFT JOIN certification as c ON e_c.certification_id=c.certification_id;`
+
+        let query = `
+                      SELECT * 
+                      FROM certification;                     
+                    `
+
+        db.query(query, (err, result) => {
+          if (err) {
+            res.redirect('/');
+          }                
+          
+          data.certifications = result   	                   
+
+          let query = `SELECT cert_name
+                      FROM 
+                    ( SELECT e_c.employee_id, c.cert_name, e.fname FROM employee_certification as e_c
+                    LEFT JOIN employee as e ON e_c.employee_id=e.employee_id
+                    LEFT JOIN certification as c ON e_c.certification_id=c.certification_id ) as certs
+                    WHERE certs.employee_id=${req.params.id}`                               
+            
+          db.query(query, (err, result) => {
+            if (err) {
+              res.redirect('/');
+            }    
+            
+            let certs = []
+
+            result.forEach((item) => {
+              certs.push(item.cert_name)
+            })
+            
+            data.self_certs = certs   	
+            
+            
+              
+            res.render('edit-employee', {
+              data: data
+            });
+          }) 
+        })  
       })		
     })
 	})   	
@@ -270,20 +310,51 @@ app.post("/employees/edit/:id", (req, res) => {
   let department = req.body.department
   let position = req.body.position
   let mgr = req.body.manager
+  let certifications = req.body.certifications
 
-  if (mgr === 'null') {
+  console.log(req.body)
+  console.log(req.body.certifications)
+
+  if (!department) {
+    department = null
+  }
+
+  if (!mgr || mgr === 'null') {
     mgr = null
   }
   // let startDate = req.body["start-date"];
   // let employeeStatus = req.body["employee-stat"];  
 
   let query = "UPDATE `employee` SET `fname` = '" + fname + "', `lname` = '" + lname + "', `monthly_salary` = '" + monthlySalary + "', `department_id` = '" + department + "', `position` = '" + position + "', `manager_id` = " + mgr + " WHERE `employee`.`employee_id` = '" + employee_id + "'";
+
+    db.query(query, (err, result) => {
+      if (err) { 
+        return res.status(500).send(err);
+      }
+
+      let query = `DELETE FROM employee_certification WHERE employee_id=${employee_id}`
+
+      db.query(query, (err, result) => {
+        if (err) { 
+          return res.status(500).send(err);
+        }
+        
+        let valuesList = ''
+
+        certifications.forEach((cert) => {
+          
+        })
+
+        let query = `INSERT INTO employee_certification VALUES `
+
         db.query(query, (err, result) => {
-            if (err) { 
-                return res.status(500).send(err);
-            }
-            res.redirect('/employees');
+          if (err) { 
+            return res.status(500).send(err);
+          }
+          res.redirect('/employees');
         });
+      });
+    });
 });
 
 // delete employee
@@ -506,10 +577,10 @@ app.get("/certifications", (req, res) => {
 app.post("/certifications", (req, res) => {
 
 	let certName = req.body.certName; 
-	let expDate = req.body.expDate;
+	let issuer = req.body.issuer;
   
-	let query = "INSERT INTO `certification` (cert_name, expires) VALUES ('" +
-		certName + "', '" + expDate + "')";
+	let query = "INSERT INTO `certification` (cert_name, issued_by) VALUES ('" +
+		certName + "', '" + issuer + "')";
   
 	db.query(query, (err, result) => {
 		if (err) {
@@ -542,10 +613,10 @@ app.get("/certifications/edit/:id", (req,res) => {
 app.post("/certifications/edit/:id", (req, res) => {  
   
   let certification_id = req.body.certification_id
-	let certificationExpr = req.body["certExpire"];
+	let issuer = req.body.issuer;
 
 
-	let query = "UPDATE `certification` SET `expires` = '" + certificationExpr + "' WHERE `certification`.`certification_id` = '" + certification_id + "'";
+	let query = "UPDATE `certification` SET `issued_by` = '" + issuer + "' WHERE `certification`.`certification_id` = '" + certification_id + "'";
 		 
 	db.query(query, (err, result) => {
 		if (err) {

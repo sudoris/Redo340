@@ -22,12 +22,47 @@
               <label for="position_input">Title</label>
               <input type="text" maxlength="50" value="<%= data.employee.position %>" class="form-control" name="position" id="position_input" placeholder="Title">              
             </div>  
+
+            <div class="update-certs mb-3">
+              <p class="mb-2">Certifications</p>            
+              <p>Check to add a certification</p>
+              <% data.certifications.forEach((certification) => { %>
+                <fieldset> 
+                  <div>
+                    <% if(!data.self_certs.includes(certification.cert_name)) { %>   
+                      <input type="checkbox" id="<%= certification.certification_id + 'add' %>" name="add_certifications" value="<%= certification.cert_name %>">
+                      <label for="<%= certification.certification_id + 'add' %>"><%= certification.cert_name %></label>
+                    <% } %>                  
+                    
+                  </div>                
+                </fieldset>                                     
+              <% }) %> 
+              <p>Check to remove a certification</p>
+              <% data.certifications.forEach((certification) => { %>
+                <fieldset> 
+                  <div>
+                    <% if(data.self_certs.includes(certification.cert_name)) { %>   
+                      <input type="checkbox" id="<%= certification.certification_id + 'remove' %>" name="remove_certifications" value="<%= certification.cert_name %>">
+                      <label for="<%= certification.certification_id + 'remove' %>"><%= certification.cert_name %></label>
+                    <% } %>    
+                                                
+                    
+                  </div>                
+                </fieldset>                                     
+              <% }) %>                            
+            </div>
             
             <div class="form-group">
               <label for="department_input">Branch & Department</label>
               <select class="form-control" name="department" id="department_input">
 
-                <option value="<%= data.employee.department_id %>"><%= data.employee.city + ' ' + data.employee.dep_name %></option>
+                <% if(data.employee.department_id && (data.employee.city || data.employee.dep_name)) { %>                  
+                  <option value="<%= data.employee.department_id %>"><%= data.employee.city + ' ' + data.employee.dep_name %></option>
+                <% } else { %> 
+                  <option value="">No department assigned</option>
+                <% } %>  
+
+                <!-- <option value="<%= data.employee.department_id %>"><%= data.employee.city + ' ' + data.employee.dep_name %></option> -->
                 <option value="" class="bg-info text-white" disabled>---Select Branch & Department---</option>
                 <% data.departments.forEach((department) => { %>
                   <option value="<%= department.department_id %>"><%= department.city || "N/A" %> <%= department.dep_name %> Department</option>

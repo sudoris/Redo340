@@ -125,11 +125,13 @@
                 <td><%= employee.dep_name %></td>
                 <td><%= employee.position %></td>
                 <td>
-                  <% data.certifications.forEach((cert) => { %>
-                    <% if (cert.employee_id === employee.employee_id) { %>
-                      <button type="button" class="btn btn-outline-info btn-small"><%= cert.cert_name %></button>
-                    <% } %> 
-                  <% }) %>                  
+                  <ul>
+                    <% data.certifications.forEach((cert) => { %>
+                      <% if (cert.employee_id === employee.employee_id) { %>
+                        <li><%= cert.cert_name %></li>
+                      <% } %> 
+                    <% }) %> 
+                  </ul>                 
                 </td>
                 <td><%= employee.monthly_salary %></td>
                 <td><%= employee.start_date %></td>
