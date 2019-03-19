@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-2 p-0">   
       <div class="border border-info rounded-sm p-3 bg-white form-wrapper"> 
-        <h4>Add New Employee</h2>               
+        <h4>Add New Employee</h2>      
         <fieldset>
           <form action="/employees/add" method="POST" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
@@ -34,7 +34,20 @@
 
             <div class="form-group">
               <label for="position_input">Title</label>
-              <input type="text" maxlength="50" class="form-control" name="position" id="position_input" placeholder="Title" required>              
+              <input type="text" class="form-control" name="position" id="position_input" placeholder="Title" required>              
+            </div>  
+            
+            <div class="update-certs mb-3">
+              <p class="mb-2">Certifications</p>            
+            
+              <% data.certificationList.forEach((certification) => { %>
+                <fieldset> 
+                  <div>                                                          
+                    <input type="checkbox" id="<%= certification.certification_id %>" name="certificationList" value="<%= certification.cert_name %>">                                      
+                    <label for="<%= certification.certification_id %>"><%= certification.cert_name %></label>                    
+                  </div>                
+                </fieldset>                                     
+              <% }) %>                                                 
             </div>  
             
             <!-- <div class="form-group">
@@ -87,6 +100,7 @@
       <div class="border border-info rounded-sm p-3 bg-white ml-4 mr-5 table-wrapper">
         <div class="d-flex justify-content-between mb-2">
           <h4>Employees</h4>
+
           <!-- Search form -->
           <fieldset>
             <form action="/employees/find" method="GET" class="form-inline" id='search-form' enctype="application/x-www-form-urlencoded">
@@ -95,7 +109,6 @@
             </form>  
           </fieldset>
         </div>
-        
         <table class="table">
           <thead>
             <tr>
@@ -111,7 +124,6 @@
               <th>Start Date</th>
               <!-- <th>Employment Status</th> -->
               <th>Manager</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -137,19 +149,13 @@
                 <td><%= employee.start_date %></td>
                 <!-- <td><%= (employee.employment_status) %></td>                  -->
                 <td>                                      
-                  <!-- <div class="d-flex flex-row justify-content-between">    -->
+                  <div class="d-flex flex-row justify-content-between">   
                     <span class="mr-5"><%= employee.manager_fname %> <%= employee.manager_lname %></span>  
-                    <!-- <span>
+                    <span>
                       <a href="/employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
                       <a href="/employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
-                    </span>             -->
-                  <!-- </div>       -->
-                </td>
-                <td>
-                  <span class="d-flex flex-row">
-                    <a href="/employees/edit/<%= employee.employee_id %>" class="btn btn-sm btn-info mr-2"><i class="far fa-edit"></i></a>
-                    <a href="/employees/delete/<%= employee.employee_id %>" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i></a>
-                  </span>    
+                    </span>            
+                  </div>      
                 </td>
 
                 <!-- <td class="d-flex">                  
@@ -168,18 +174,6 @@
 
 <script>
 
-  function toSearch() {        
-    
-    searchVal = document.getElementById('search-input').value
-
-    console.log(searchVal)
-
-    let homeUrl = window.location.origin
-    window.location.href = `${homeUrl}/employees/find?searchVal=${searchVal}`
-
-    // window.location.pathname = `/employees/find/?searchVal=${searchVal}`    
-  }
-
   // function deleteEmployee(id) {      
 
   //   axios.post('/employees/delete', {
@@ -192,6 +186,14 @@
   //     console.log(error);
   //   });
   // }
+  function toSearch() {        
+    
+    searchVal = document.getElementById('search-input').value
+    console.log(searchVal)
+    let homeUrl = window.location.origin
+    window.location.href = `${homeUrl}/employees/find?searchVal=${searchVal}`
+    // window.location.pathname = `/employees/find/?searchVal=${searchVal}`    
+  }
 
 </script>
 

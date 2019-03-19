@@ -51,6 +51,8 @@ app.get("/employees", (req, res) => {
 	// send query to get data to populate employee table
   db.query(query, (err, result) => {
 		if (err) {      
+
+
 			res.redirect('/');
     }   
 
@@ -63,6 +65,7 @@ app.get("/employees", (req, res) => {
 		// send query to get data to populate Branch & Department drop down list in Add Employee form
     db.query(query, (err, result) => {
       if (err) {
+				console.log(err)
         res.redirect('/');
       }                         
 
@@ -88,10 +91,11 @@ app.get("/employees", (req, res) => {
 			// send query to get data to populate Manager drop down list in Add Employee form
       db.query(query, (err, result) => {
 				if (err) {
+					console.log(err)
 					res.redirect('/');
 				}                
 				
-        data.managers = result   
+				data.managers = result  								
         
         // query for employee_certification list
         let query = `SELECT e_c.employee_id, c.cert_name, e.fname FROM employee_certification as e_c
@@ -100,16 +104,26 @@ app.get("/employees", (req, res) => {
 
         db.query(query, (err, result) => {
           if (err) {
+						console.log(err)
             res.redirect('/');
-          }                
-          
-          data.certifications = result   	
-          
-          
-            
-          res.render('employees', {
-            data: data
-          });
+					}      
+
+					data.certifications = result   	
+					
+					let query = `SELECT * FROM certification`
+
+					db.query(query, (err, result) => {
+						if (err) {
+							console.log(err, "getting certs")
+							res.redirect('/');
+						}                
+						
+						data.certificationList = result   												
+							
+						res.render('employees', {
+							data: data
+						});
+					})   	                                                        
         })   						
 			})   
     })   		
@@ -285,9 +299,9 @@ app.get("/employees/edit/:id", (req, res) => {
               certs.push(item.cert_name)
             })
             
-            data.self_certs = certs   	
-            
-            
+						data.self_certs = certs   	          
+						
+						console.log(data.self_certs)
               
             res.render('edit-employee', {
               data: data
@@ -310,13 +324,10 @@ app.post("/employees/edit/:id", (req, res) => {
   let department = req.body.department
   let position = req.body.position
   let mgr = req.body.manager
-  let certifications = req.body.certifications
-
-  console.log(req.body)
-  console.log(req.body.certifications)
+  let certifications = req.body.certifications  
 
   if (!department) {
-    department = null
+    department = 1
   }
 
   if (!mgr || mgr === 'null') {
@@ -327,32 +338,66 @@ app.post("/employees/edit/:id", (req, res) => {
 
   let query = "UPDATE `employee` SET `fname` = '" + fname + "', `lname` = '" + lname + "', `monthly_salary` = '" + monthlySalary + "', `department_id` = '" + department + "', `position` = '" + position + "', `manager_id` = " + mgr + " WHERE `employee`.`employee_id` = '" + employee_id + "'";
 
+		console.log(query, '88888888888')
+
     db.query(query, (err, result) => {
       if (err) { 
-        return res.status(500).send(err);
+        res.redirect('/');
       }
 
       let query = `DELETE FROM employee_certification WHERE employee_id=${employee_id}`
 
       db.query(query, (err, result) => {
         if (err) { 
-          return res.status(500).send(err);
-        }
-        
-        let valuesList = ''
+          res.redirect('/');
+        }               				
+				
+				let queries = []
 
-        certifications.forEach((cert) => {
-          
-        })
+			
+				
+				// make sure certifications is an array
+				if (!Array.isArray(certifications)) {
+					let tempArr = []
+					tempArr.push(certifications)
+					certifications = tempArr
+				}
 
-        let query = `INSERT INTO employee_certification VALUES `
+				
+				
+				certifications.forEach((certName) => {
+					queries.push(`INSERT INTO employee_certification(employee_id, certification_id) SELECT employee_id, certification_id FROM employee, certification WHERE certification.cert_name='${certName}' AND employee.employee_id=${employee_id};`)
+				})
 
-        db.query(query, (err, result) => {
-          if (err) { 
-            return res.status(500).send(err);
-          }
-          res.redirect('/employees');
-        });
+				queries.forEach((query, index) => {
+					db.query(query, (err, result) => {						
+	
+						if (err) { 
+							
+							// return res.status(500).send(err);
+							res.redirect('/');
+						}				
+
+						if (index === queries.length - 1) {
+							
+							res.redirect('/employees');
+						}												
+					});
+				})
+
+				
+
+
+        // db.query(queries, (err, result) => {
+
+				// 	console.log(queries)
+
+        //   if (err) { 
+        //     return res.status(500).send(err);
+				// 	}				
+					
+        //   res.redirect('/employees');
+        // });
       });
     });
 });
@@ -364,7 +409,8 @@ app.get("/employees/delete/:id", (req, res) => {
                     
   db.query(deleteEmployeeQuery, (err, result) => {
       if (err) {
-          return res.status(500).send(err);
+					// return res.status(500).send(err);
+					res.redirect('/');
       }
       res.redirect('/employees');
   });
@@ -415,7 +461,8 @@ app.post("/departments", (req, res) => {
   
 	db.query(query, (err, result) => {
 		if (err) {
-			return res.status(500).send(err);
+			// return res.status(500).send(err);
+			res.redirect('/');
 		}
 		res.redirect('/departments');
 	});  
@@ -450,7 +497,8 @@ app.post("/departments/edit/:id", (req, res) => {
   let query ="UPDATE `department` SET `dep_name` = '" + deptName + "' WHERE `department`.`department_id` = '" + department_id + "'";
         db.query(query, (err, result) => {
             if (err) {
-                return res.status(500).send(err);
+								// return res.status(500).send(err);
+								res.redirect('/');
 						}
             res.redirect('/departments');
         });
@@ -463,7 +511,8 @@ app.get("/departments/delete/:id", (req, res) => {
                     
   db.query(deleteDepartmentQuery, (err, result) => {
       if (err) {
-          return res.status(500).send(err);
+					// return res.status(500).send(err);
+					res.redirect('/');
       }
       res.redirect('/departments');
   });
@@ -499,7 +548,8 @@ app.post("/branches", (req, res) => {
   
 	db.query(query, (err, result) => {
 		if (err) {
-			return res.status(500).send(err);
+			// return res.status(500).send(err);
+			res.redirect('/');
 		}
 		res.redirect('/branches');
 	});  
@@ -536,7 +586,8 @@ app.post("/branches/edit/:id", (req, res) => {
 		 
 					db.query(query, (err, result) => {
 						if (err) {
-                return res.status(500).send(err);
+								// return res.status(500).send(err);
+								res.redirect('/');
 						}
 						res.redirect('/branches');
 	});
@@ -549,7 +600,8 @@ app.get("/branches/delete/:id", (req, res) => {
                     
   db.query(deleteBranchQuery, (err, result) => {
       if (err) {
-          return res.status(500).send(err);
+					// return res.status(500).send(err);
+					res.redirect('/');
       }
       res.redirect('/branches');
   });
@@ -584,7 +636,8 @@ app.post("/certifications", (req, res) => {
   
 	db.query(query, (err, result) => {
 		if (err) {
-			return res.status(500).send(err);
+			// return res.status(500).send(err);
+			res.redirect('/');
 		}
 		res.redirect('/certifications');
 	});  

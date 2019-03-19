@@ -28,12 +28,12 @@ CREATE TABLE `employee` (
 -- Dumping data for table `employee`
 --
 LOCK TABLES `employee` WRITE;
-INSERT INTO `employee` (fname, lname, birthday, monthly_salary, position, is_manager) VALUES ('Donald', 'Trump', '1920-12-01', 1, 'Clown', 0), ('Jesus','Christ', '0001-01-01', 2222, 'Admiral', 0), ('Satya','Nadella', '1967-08-19', 5000, 'CEO', 1), ('William','Adama', '1990-01-01', 4894, 'Admiral', 0), ('Lee','Adama', '2100-06-25', 4000, 'Captain', 1), ('David','Chen', '1989-08-14', 64968, 'Frontend Engineer', 0), ('Ryan','Yun', '1993-04-20', 999649, 'Intern', 1);
+INSERT INTO `employee` (fname, lname, birthday, monthly_salary, position, is_manager) VALUES ('Donald', 'Trump', '1920-12-01', 1, 'Clown', 0), ('Jesus','Christ', '0001-01-01', 2222, 'Admiral', 0), ('Satya','Nadella', '1967-08-19', 5000, 'CEO', 1), ('William','Adama', '1990-01-01', 4894, 'Admiral', 0), ('Donald','Duck', '2100-06-25', 4000, 'Captain', 1), ('David','Chen', '1989-08-14', 64968, 'Frontend Engineer', 0), ('Ryan','Yun', '1993-04-20', 999649, 'Intern', 1);
 UNLOCK TABLES;
 
 -- Add recursive relation employee to employee
 ALTER TABLE `employee`
-ADD FOREIGN KEY (`manager_id`) REFERENCES `employee` (`employee_id`) ON DELETE SET NULL;
+ADD FOREIGN KEY (`manager_id`) REFERENCES `employee` (`employee_id`) ON DELETE CASCADE;
 
 -- Add managers to employees
 LOCK TABLES `employee` WRITE;
@@ -54,7 +54,7 @@ CREATE TABLE `department` (
   `branch_id` int(11),
   `dep_name` varchar(50),
   PRIMARY KEY (`department_id`),
-  FOREIGN KEY (`head_id`) REFERENCES `employee` (`employee_id`) ON DELETE SET NULL
+  FOREIGN KEY (`head_id`) REFERENCES `employee` (`employee_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 --
@@ -66,7 +66,7 @@ UNLOCK TABLES;
 
 -- Add foreign key to department table in employee table
 ALTER TABLE `employee`
-ADD FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE SET NULL;
+ADD FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`) ON DELETE CASCADE;
 
 -- Add departments to employees
 LOCK TABLES `employee` WRITE;
@@ -100,7 +100,7 @@ UNLOCK TABLES;
 
 -- Add foreign key to branch table in department table
 ALTER TABLE `department`
-ADD FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE SET NULL;
+ADD FOREIGN KEY (`branch_id`) REFERENCES `branch` (`branch_id`) ON DELETE CASCADE;
 
 -- Add branches for to departments
 LOCK TABLES `department` WRITE;
